@@ -221,6 +221,112 @@ SKILLS LIST & BARS
 }
 
 /* ===========================
+    Projects
+    =========================== */
+main #projects-title {
+    font-family: 'beachday', Arial, sans-serif;
+    font-size: 5rem;
+    color: #fff;
+    text-align: center;
+    margin: 2rem 0;
+}
+.project-section {
+    width: 90%;
+    margin: 0 auto;
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 36px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.12);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+/* ===========================
+    PROJECT CAROUSEL
+    =========================== */
+.project-carousel {
+    text-align: center;
+    margin-bottom: 2em;
+    position: relative;
+}
+.carousel-images {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+}
+
+.project-carousel #carousel-prev{
+    all: unset;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+    font-size: 4rem;
+    width: 5%;
+    height: 100%;
+    cursor: pointer;
+    color: #fff;
+    opacity: .6;
+}
+.project-carousel #carousel-prev:hover,
+.project-carousel #carousel-next:hover {
+    opacity: 1;
+    transition: opacity 0.3s ease;
+}
+.project-carousel #carousel-next{
+    all: unset;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+    font-size: 4rem;
+    width: 5%;
+    height: 100%;
+    cursor: pointer;
+    color: #fff;
+    opacity: .6;
+}
+.carousel-img {
+    transition: transform 0.3s, opacity 0.3s;
+    border-radius: 10px;
+}
+.carousel-center {
+    width: 75vw;
+    max-width: 75vw;
+    height: auto;
+    max-height: fit-content;
+    box-shadow: 0 0 10px #aaa;
+    z-index: 2;
+}
+.carousel-left, .carousel-right {
+    width: 120px;
+    height: 80px;
+    opacity: 0.6;
+    z-index: 1;
+}
+
+/* ===========================
+    PROJECT INFO
+    =========================== */
+.project-title {
+    font-family: 'beachday', Arial, sans-serif;
+    font-size: 3rem;
+    color: #fff;
+    margin-top: 1em;
+}
+
+.project-description {
+    font-family: 'fredoka', Arial, sans-serif;
+    font-size: 1.5rem;
+    color: #ddd;
+    padding: 0 1em;
+}
+
+/* ===========================
     RESPONSIVE DESIGN
     =========================== */
 @media (max-width: 900px) {
