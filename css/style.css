@@ -192,7 +192,7 @@ SKILLS LIST & BARS
 .skill-bar {
     width: 100%;
     height: 18px;
-    background: rgba(119, 157, 103, 0.18);
+    background: rgba(119, 157, 103, 0.18); 
     border-radius: 9px;
     margin-top: 0.4rem;
     overflow: hidden;
@@ -204,6 +204,20 @@ SKILLS LIST & BARS
     background: linear-gradient(90deg, #779d67 0%, #b7e2c3 100%);
     border-radius: 9px 0 0 9px;
     transition: width 0.7s cubic-bezier(0.4,0,0.2,1);
+}
+
+/* ===========================
+    CONTACT
+    =========================== */
+.contact-block ul a {
+    all: unset;
+    color: #779d67;
+}
+
+.contact-block ul a:hover {
+    text-decoration: underline;
+    color: #b7e2c3;
+    cursor: pointer;
 }
 
 /* ===========================
