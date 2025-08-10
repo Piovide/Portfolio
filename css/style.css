@@ -15,6 +15,13 @@ body {
     letter-spacing: 0.1em;
 }
 
+/* Background ottimizzato per dispositivi mobili */
+@media (max-width: 767px) {
+    body {
+        background: url('../res/mobile_background.jpeg') no-repeat center / cover;
+    }
+}
+
 h1, h2, h3, h4, h5, h6 {
     font-weight: 600;
     margin-bottom: 1rem;
@@ -192,7 +199,7 @@ SKILLS LIST & BARS
 .skill-bar {
     width: 100%;
     height: 18px;
-    background: rgba(119, 157, 103, 0.18); 
+    background: rgba(119, 157, 103, 0.38);
     border-radius: 9px;
     margin-top: 0.4rem;
     overflow: hidden;
@@ -202,11 +209,17 @@ SKILLS LIST & BARS
 .skill-level {
     height: 100%;
     background: linear-gradient(90deg, #779d67 0%, #b7e2c3 100%);
-    border-radius: 9px 0 0 9px;
+    border-radius: 0 50px 50px 0;
+    width: 0%;
     transition: width 0.7s cubic-bezier(0.4,0,0.2,1);
     will-change: width;
     backface-visibility: hidden;
     transform: translate3d(0,0,0);
+}
+
+/* Classe per l'animazione delle skill */
+.skill-level.animate {
+    width: var(--target-width);
 }
 
 /* ===========================
@@ -214,14 +227,15 @@ SKILLS LIST & BARS
     =========================== */
 .contact-block ul a {
     all: unset;
-    color: #779d67;
+    color: #ddd;
     will-change: color;
+    text-decoration: none;
     transition: color 0.3s ease;
+    word-break: break-all;
 }
 
 .contact-block ul a:hover {
-    text-decoration: underline;
-    color: #b7e2c3;
+    color: #62ad77;
     cursor: pointer;
     will-change: color;
 }
@@ -238,7 +252,7 @@ main #projects-title {
 }
 .project-section {
     width: 90%;
-    margin: 0 auto;
+    margin: 5rem auto;
     padding: 2rem 0;
     background: rgba(255, 255, 255, 0.08);
     border-radius: 36px;
@@ -269,7 +283,7 @@ main #projects-title {
     transform: translate3d(0,0,0);
 }
 
-.project-carousel #carousel-prev{
+.project-carousel [id^="carousel-prev"]{
     all: unset;
     position: absolute;
     left: 0;
@@ -285,14 +299,14 @@ main #projects-title {
     will-change: opacity;
     backface-visibility: hidden;
 }
-.project-carousel #carousel-prev:hover,
-.project-carousel #carousel-next:hover {
+.project-carousel [id^="carousel-prev"]:hover,
+.project-carousel [id^="carousel-next"]:hover {
     opacity: 1;
     transition: opacity 0.3s ease;
     will-change: opacity;
     backface-visibility: hidden;
 }
-.project-carousel #carousel-next{
+.project-carousel [id^="carousel-next"]{
     all: unset;
     position: absolute;
     right: 0;
@@ -373,6 +387,42 @@ main #projects-title {
     font-family: 'fredoka', Arial, sans-serif;
     font-size: 1.5rem;
     color: #ddd;
+    margin-bottom: 1.5rem;
+}
+
+/* More Project Info Styling */
+.more-project-info {
+    list-style: none;
+    padding: 0;
+    margin: 1.5rem 0 0 0;
+    font-family: 'fredoka', Arial, sans-serif;
+}
+
+.more-project-info li {
+    font-size: 1.2rem;
+    color: #eee;
+    margin-bottom: 0.8rem;
+    line-height: 1.5;
+}
+
+.more-project-info strong {
+    color: #fff;
+    font-weight: 600;
+}
+
+.more-project-info a {
+    all: unset;
+    color: #ddd;
+    will-change: color;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    word-break: break-all;
+}
+
+.more-project-info a:hover {
+    color: #afdbbc;
+    cursor: pointer;
+    will-change: color;
 }
 
 @keyframes carousel-center-to-left {
@@ -572,14 +622,15 @@ main #projects-title {
 
     @media (max-width: 900px) {
         section.intro-section {
-            flex-direction: column;
+            /* flex-direction: column; */
             align-items: center;
             padding: 1rem;
         }
         section.intro-section img.intro-image {
             margin: 0 0 1rem 0;
             width: 100%;
-            max-width: 320px;
+            max-width: 200px;
+            object-fit: cover;
         }
         .intro-text h2 {
             font-size: 2.5rem;
@@ -590,11 +641,10 @@ main #projects-title {
         section.curriculum-section {
             grid-template-columns: 1fr 1fr;
             grid-template-areas:
-                "skills"
-                "education"
-                "hobbies"
-                "programs"
-                "contact";
+                "skills skills"
+                "programs education"
+                "hobbies hobbies"
+                "contact contact";
             gap: 1rem;
             padding: 1rem;
         }
@@ -663,6 +713,9 @@ main #projects-title {
         }
         .project-info {
             padding: 0 0.5rem;
+        }
+        .more-project-info li {
+            font-size: 1rem;
         }
         .skills-list li {
             font-size: 1rem;

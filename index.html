@@ -27,67 +27,67 @@
             <li>
                 HTML
                 <div class="skill-bar">
-                <div class="skill-level" style="width: 90%;"></div>
+                <div class="skill-level" data-percentage="90"></div>
                 </div>
             </li>
             <li>
                 CSS
                 <div class="skill-bar">
-                <div class="skill-level" style="width: 90%;"></div>
+                <div class="skill-level" data-percentage="90"></div>
                 </div>
             </li>
             <li>
                 JavaScript
                 <div class="skill-bar">
-                <div class="skill-level" style="width: 65%;"></div>
+                <div class="skill-level" data-percentage="65"></div>
                 </div>
             </li>
             <li>
                 SQL
                 <div class="skill-bar">
-                <div class="skill-level" style="width: 80%;"></div>
+                <div class="skill-level" data-percentage="80"></div>
                 </div>
             </li>
             <li>
                 PHP
                 <div class="skill-bar">
-                <div class="skill-level" style="width: 85%;"></div>
+                <div class="skill-level" data-percentage="85"></div>
                 </div>
             </li>
             <li>
                 Java
                 <div class="skill-bar">
-                <div class="skill-level" style="width: 90%;"></div>
+                <div class="skill-level" data-percentage="90"></div>
                 </div>
             </li>
             <li>
                 Bash
                 <div class="skill-bar">
-                <div class="skill-level" style="width: 50%;"></div>
+                <div class="skill-level" data-percentage="50"></div>
                 </div>
             </li>
             <li>
                 C
                 <div class="skill-bar">
-                <div class="skill-level" style="width: 80%;"></div>
+                <div class="skill-level" data-percentage="80"></div>
                 </div>
             </li>
             <li>
                 C++
                 <div class="skill-bar">
-                <div class="skill-level" style="width: 40%;"></div>
+                <div class="skill-level" data-percentage="40"></div>
                 </div>
             </li>
             <li>
                 C#
                 <div class="skill-bar">
-                <div class="skill-level" style="width: 30%;"></div>
+                <div class="skill-level" data-percentage="30"></div>
                 </div>
             </li>
             <li>
                 Flutter
                 <div class="skill-bar">
-                <div class="skill-level" style="width: 50%;"></div>
+                <div class="skill-level" data-percentage="50"></div>
                 </div>
             </li>
             </ul>
@@ -137,237 +137,41 @@
         <h1 id="projects-title">Progetti</h1>
         <section class="project-section">
             <div class="project-carousel">
-            <div class="carousel-images"></div>
-            <!-- Carousel navigation buttons -->
-            <button id="carousel-prev" type="button" aria-label="Immagine precedente">&#10094;</button>
-            <button id="carousel-next" type="button" aria-label="Immagine successiva">&#10095;</button>
             </div>
             <div class="project-info">
-                <h2 class="project-title" id="carousel-title">Platformer</h2>
+                <h2 class="project-title">Platformer</h2>
                 <p class="project-description">
-                Descrizione breve del progetto 1. Puoi aggiungere qui dettagli, tecnologie usate, obiettivi, ecc.
+                    Questo progetto è un gioco platform 2D sviluppato interamente in Java. Per un progetto di coppia di fine anno di quarta superiore.
                 </p>
+                <ul class="more-project-info">
+                    <li><strong>Data di inizio</strong>: Marzo 2024</li>
+                    <li><strong>Data di fine</strong>: Maggio 2024</li>
+                    <li><strong>Technologie utilizzate</strong>: Java</li>
+                    <li><strong>Collaboratori</strong>: Marco Furlan</li>
+                    <li><strong>Link al repository</strong>: <a href="https://github.com/Piovide/Progetto-Java-Platform-" target="_blank">GitHub</a></li>
+                </ul>
             </div>
         </section>
-        <script>
-        async function createProjectCarousel(projectName, containerSelector) {
-            const container = document.querySelector(containerSelector);
-            if (!container) return;
-
-            // Carousel HTML structure
-            container.innerHTML = `
-            <div class="carousel-images"></div>
-            <button id="carousel-prev" type="button" aria-label="Immagine precedente">&#10094;</button>
-            <button id="carousel-next" type="button" aria-label="Immagine successiva">&#10095;</button>
-            `;
-
-            let availableImages = [];
-            let current = 0;
-            let isAnimating = false;
-            let allImagesLoaded = false;
-
-            // Fetch all images from the project folder using fetch and directory listing (requires server-side support)
-            async function fetchImages() {
-            // Assumes a PHP/Apache directory listing is enabled
-            // Example: GET res/projectName/ returns HTML with <a href="img1.png"> etc.
-            try {
-                const response = await fetch(`res/${projectName}/`);
-                const text = await response.text();
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(text, 'text/html');
-                const links = Array.from(doc.querySelectorAll('a'));
-                availableImages = links
-                .map(a => a.getAttribute('href'))
-                .filter(href => /\.(png|jpg|jpeg|svg|webp|gif)$/i.test(href))
-                .map(href => `res/${projectName}/${href}`);
-            } catch (e) {
-                availableImages = [];
-            }
-            initializeCarousel();
-            }
-
-            function createImg(src, index) {
-                const img = document.createElement('img');
-                img.src = src;
-                img.className = 'carousel-img';
-                img.alt = '';
-                img.loading = 'lazy';
-                img.dataset.index = index;
-                img.style.opacity = '0';
-                return img;
-            }
-
-            function initializeCarousel() {
-                const carousel = container.querySelector('.carousel-images');
-                const prevBtn = container.querySelector('#carousel-prev');
-                const nextBtn = container.querySelector('#carousel-next');
-                const len = availableImages.length;
-
-                if (len === 0) {
-                    carousel.innerHTML = '<span>Nessuna immagine disponibile riprova più tardi</span>';
-                    prevBtn.disabled = true;
-                    nextBtn.disabled = true;
-                    return;
-                }
-
-                prevBtn.disabled = false;
-                nextBtn.disabled = false;
-                carousel.innerHTML = '';
-
-                // Carica tutte le immagini e le mantiene nascoste
-                availableImages.forEach((src, index) => {
-                    const img = createImg(src, index);
-                    carousel.appendChild(img);
-                });
-
-                allImagesLoaded = true;
-                updateVisibleImages();
-            }
-
-            function updateVisibleImages() {
-                if (!allImagesLoaded) return;
-                
-                const carousel = container.querySelector('.carousel-images');
-                const len = availableImages.length;
-                
-                // Resetta tutte le immagini
-                carousel.querySelectorAll('.carousel-img').forEach(img => {
-                    img.className = 'carousel-img';
-                    img.style.opacity = '0';
-                    img.style.position = 'absolute';
-                    img.style.animation = '';
-                    img.style.zIndex = '-1';
-                });
-
-                if (len === 1) {
-                    // Solo un'immagine
-                    const centerImg = carousel.querySelector(`[data-index="${current}"]`);
-                    centerImg.className = 'carousel-img carousel-center';
-                    centerImg.style.opacity = '1';
-                    centerImg.style.position = 'relative';
-                    centerImg.style.zIndex = '2';
-                } else if (len > 1) {
-                    // Immagine centrale
-                    const centerImg = carousel.querySelector(`[data-index="${current}"]`);
-                    centerImg.className = 'carousel-img carousel-center';
-                    centerImg.style.opacity = '1';
-                    centerImg.style.position = 'relative';
-                    centerImg.style.zIndex = '2';
-
-                    // Immagine sinistra
-                    const leftIndex = (current - 1 + len) % len;
-                    const leftImg = carousel.querySelector(`[data-index="${leftIndex}"]`);
-                    leftImg.className = 'carousel-img carousel-left';
-                    leftImg.style.opacity = '0.6';
-
-                    // Immagine destra
-                    const rightIndex = (current + 1) % len;
-                    const rightImg = carousel.querySelector(`[data-index="${rightIndex}"]`);
-                    rightImg.className = 'carousel-img carousel-right';
-                    rightImg.style.opacity = '0.6';
-                }
-            }
-
-            function animateCarousel(direction) {
-                if (isAnimating || availableImages.length <= 1) return;
-                
-                isAnimating = true;
-                const carousel = container.querySelector('.carousel-images');
-                const len = availableImages.length;
-                
-                // Calcola nuovi indici
-                const newCurrent = direction === 'next' 
-                    ? (current + 1) % len
-                    : (current - 1 + len) % len;
-                
-                // Elementi attuali
-                const centerImg = carousel.querySelector(`[data-index="${current}"]`);
-                const leftIndex = (current - 1 + len) % len;
-                const rightIndex = (current + 1) % len;
-                const leftImg = carousel.querySelector(`[data-index="${leftIndex}"]`);
-                const rightImg = carousel.querySelector(`[data-index="${rightIndex}"]`);
-                
-                // Nuovi elementi che entreranno
-                const newLeftIndex = (newCurrent - 1 + len) % len;
-                const newRightIndex = (newCurrent + 1) % len;
-                
-                if (direction === 'next') {
-                    // L'immagine centrale va verso sinistra
-                    if (centerImg) {
-                        centerImg.style.animation = 'carousel-center-to-left 0.5s ease-in-out forwards';
-                    }
-                    
-                    // L'immagine di destra diventa centrale
-                    if (rightImg) {
-                        rightImg.style.animation = 'carousel-right-to-center 0.5s ease-in-out forwards';
-                        rightImg.className = 'carousel-img carousel-center';
-                    }
-                    
-                    // L'immagine di sinistra esce
-                    if (leftImg) {
-                        leftImg.style.animation = 'carousel-fade-out-left 0.5s ease-in-out forwards';
-                    }
-                    
-                    // Nuova immagine entra da destra
-                    const newRightImg = carousel.querySelector(`[data-index="${newRightIndex}"]`);
-                    if (newRightImg) {
-                        newRightImg.style.animation = 'carousel-fade-in-right 0.5s ease-in-out forwards';
-                        newRightImg.className = 'carousel-img carousel-right';
-                    }
-                    
-                } else {
-                    // L'immagine centrale va verso destra  
-                    if (centerImg) {
-                        centerImg.style.animation = 'carousel-center-to-right 0.5s ease-in-out forwards';
-                    }
-                    
-                    // L'immagine di sinistra diventa centrale
-                    if (leftImg) {
-                        leftImg.style.animation = 'carousel-left-to-center 0.5s ease-in-out forwards';
-                        leftImg.className = 'carousel-img carousel-center';
-                    }
-                    
-                    // L'immagine di destra esce
-                    if (rightImg) {
-                        rightImg.style.animation = 'carousel-fade-out-right 0.5s ease-in-out forwards';
-                    }
-                    
-                    // Nuova immagine entra da sinistra
-                    const newLeftImg = carousel.querySelector(`[data-index="${newLeftIndex}"]`);
-                    if (newLeftImg) {
-                        newLeftImg.style.animation = 'carousel-fade-in-left 0.5s ease-in-out forwards';
-                        newLeftImg.className = 'carousel-img carousel-left';
-                    }
-                }
-                
-                // Aggiorna l'indice corrente e termina l'animazione
-                setTimeout(() => {
-                    current = newCurrent;
-                    updateVisibleImages();
-                    isAnimating = false;
-                }, 500);
-            }
-
-            container.querySelector('#carousel-prev').addEventListener('click', function(e) {
-            e.preventDefault();
-            if (availableImages.length === 0 || isAnimating) return;
-            animateCarousel('prev');
-            });
-
-            container.querySelector('#carousel-next').addEventListener('click', function(e) {
-            e.preventDefault();
-            if (availableImages.length === 0 || isAnimating) return;
-            animateCarousel('next');
-            });
-
-            fetchImages();
-        }
-
-        // Esempio di utilizzo: crea un carousel per il progetto "project_1" nel container ".project-carousel-container"
-        document.addEventListener('DOMContentLoaded', function() {
-            createProjectCarousel('project_1', '.project-carousel');
-        });
-        </script>
+        <section class="project-section">
+            <div class="project-carousel">
+            </div>
+            <div class="project-info">
+                <h2 class="project-title">Progetto 2</h2>
+                <p class="project-description">
+                    Descrizione del secondo progetto. Aggiungi qui i dettagli specifici del tuo progetto.
+                </p>
+                <ul class="more-project-info">
+                    <li><strong>Data di inizio</strong>: Data di inizio</li>
+                    <li><strong>Data di fine</strong>: Data di fine</li>
+                    <li><strong>Technologie utilizzate</strong>: Tecnologie utilizzate</li>
+                    <li><strong>Collaboratori</strong>: Collaboratori (se presenti)</li>
+                    <li><strong>Link al repository</strong>: <a href="#" target="_blank">GitHub</a></li>
+                </ul>
+            </div>
+        </section>
+        
     </main>
 </body>
+<script src="js/skillbar_anim.js"></script>
+<script src="js/carousel.js"></script>
 </html>
