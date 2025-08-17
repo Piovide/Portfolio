@@ -1,4 +1,74 @@
 /* ===========================
+CSS CUSTOM PROPERTIES
+=========================== */
+:root {
+    /* === COLORI PRINCIPALI === */
+    --primary-green: #779d67;
+    --primary-green-light: #b7e2c3;
+    --primary-green-hover: #62ad77;
+    --primary-green-soft: #afdbbc;
+    
+    /* === COLORI TESTO === */
+    --text-primary: #222;
+    --text-light: #ddd;
+    --text-lighter: #eee;
+    --text-white: #fff;
+    
+    /* === COLORI SFONDO === */
+    --bg-glass-light: rgba(255, 255, 255, 0.1);
+    --bg-glass-medium: rgba(255, 255, 255, 0.08);
+    --bg-glass-border: rgba(255, 255, 255, 0.15);
+    --bg-glass-border-light: rgba(255, 255, 255, 0.18);
+    --bg-block-dark: rgba(34, 34, 34, 0.12);
+    --bg-skill-bar: rgba(119, 157, 103, 0.38);
+    
+    /* === DIMENSIONI E SPAZIATURE === */
+    --border-radius-small: 10px;
+    --border-radius-medium: 24px;
+    --border-radius-large: 36px;
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 1rem;
+    --spacing-md: 1.5rem;
+    --spacing-lg: 2rem;
+    --spacing-xl: 5rem;
+    
+    /* === FONT FAMILIES === */
+    --font-primary: 'Segoe UI', Arial, sans-serif;
+    --font-beachday: 'beachday', Arial, sans-serif;
+    --font-fredoka: 'fredoka', Arial, sans-serif;
+    
+    /* === FONT SIZES === */
+    --font-title-hero: 10rem;
+    --font-title-large: 7rem;
+    --font-title-medium: 5rem;
+    --font-title-small: 3rem;
+    --font-text-large: 2rem;
+    --font-text-medium: 1.5rem;
+    --font-text-small: 1.2rem;
+    --font-text-xs: 1rem;
+    
+    /* === OMBRE E EFFETTI === */
+    --shadow-soft: 0 4px 30px rgba(0, 0, 0, 0.1);
+    --shadow-medium: 0 4px 30px rgba(0, 0, 0, 0.12);
+    --shadow-image: 0 0 10px #aaa;
+    --text-shadow-green: 0 0 50px rgb(2 40 29);
+    --text-shadow-light: 1px 1px 3px rgba(0,0,0,0.18);
+    
+    /* === TRANSIZIONI === */
+    --transition-fast: 0.3s ease;
+    --transition-smooth: 0.7s cubic-bezier(0.4,0,0.2,1);
+    
+    /* === BACKDROP FILTER === */
+    --backdrop-blur-light: blur(5px);
+    --backdrop-blur-medium: blur(5.5px);
+    
+    /* === GRADIENTI === */
+    --gradient-primary: linear-gradient(135deg, var(--primary-green) 0%, var(--primary-green-light) 100%);
+    --gradient-primary-hover: linear-gradient(135deg, var(--primary-green-hover) 0%, var(--primary-green-light) 100%);
+    --gradient-skill-bar: linear-gradient(90deg, var(--primary-green) 0%, var(--primary-green-light) 100%);
+}
+
+/* ===========================
 RESET & BASE STYLES
 =========================== */
 * {
@@ -16,18 +86,18 @@ RESET & BASE STYLES
     background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-    background: linear-gradient(135deg, #779d67 0%, #b7e2c3 100%);
-    border-radius: 10px;
-    border: 2px solid rgba(255,255,255,0.18);
+    background: var(--gradient-primary);
+    border-radius: var(--border-radius-small);
+    border: 2px solid var(--bg-glass-border-light);
 }
 ::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(135deg, #62ad77 0%, #b7e2c3 100%);
+    background: var(--gradient-primary-hover);
 }
 
 body {
-    font-family: 'Segoe UI', Arial, sans-serif;
+    font-family: var(--font-primary);
     background: url('../res/background.png') no-repeat top left / cover;
-    color: #222;
+    color: var(--text-primary);
     line-height: 1.6;
     letter-spacing: 0.1em;
 }
@@ -41,25 +111,15 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
     font-weight: 600;
-    margin-bottom: 1rem;
+    margin-bottom: var(--spacing-sm);
 }
 
 /* ===========================
 CUSTOM FONTS
 =========================== */
 @font-face {
-font-family: beachday;
-src: url('../res/fonts/beachday/beachday.otf') format('opentype');
-}
-
-@font-face {
-font-family: Ruigslay;
-src: url('../res/fonts/ruigslay/Ruigslay.otf') format('opentype');
-}
-
-@font-face {
-font-family: BROGETTA;
-src: url('../res/fonts/brogetta-regular/BROGETTA-Regular.otf') format('opentype');
+    font-family: beachday;
+    src: url('../res/fonts/beachday/beachday.otf') format('opentype');
 }
 
 @font-face {
@@ -71,12 +131,12 @@ src: url('../res/fonts/brogetta-regular/BROGETTA-Regular.otf') format('opentype'
 TITLE SECTION
 =========================== */
 #title-portfolio {
-    font-family: 'beachday', Arial, sans-serif;
+    font-family: var(--font-beachday);
     text-align: center;
-    font-size: 10rem;
-    color: #779d67;
-    text-shadow: 0 0 50px rgb(2 40 29);
-    margin-top: 1rem;
+    font-size: var(--font-title-hero);
+    color: var(--primary-green);
+    text-shadow: var(--text-shadow-green);
+    margin-top: var(--spacing-sm);
 }
 
 /* ===========================
@@ -84,40 +144,40 @@ INTRO SECTION
 =========================== */
 section.intro-section {
     width: 90%;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 36px;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(5.5px);
-    -webkit-backdrop-filter: blur(5.5px);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    margin: 2rem auto;
-    padding: 2rem;
+    background: var(--bg-glass-light);
+    border-radius: var(--border-radius-large);
+    box-shadow: var(--shadow-soft);
+    backdrop-filter: var(--backdrop-blur-medium);
+    -webkit-backdrop-filter: var(--backdrop-blur-medium);
+    border: 1px solid var(--bg-glass-border);
+    margin: var(--spacing-lg) auto;
+    padding: var(--spacing-lg);
     display: flex;
 }
 
 section.intro-section img.intro-image {
     border-radius: 26px;
-    margin-right: 2rem;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    margin-right: var(--spacing-lg);
+    box-shadow: var(--shadow-soft);
     object-fit: contain;
 }
 
 .intro-text {
-    padding: 1rem;
+    padding: var(--spacing-sm);
 }
 
 .intro-text h2 {
-    font-family: 'beachday', Arial, sans-serif;
-    font-size: 7rem;
-    color: #ddd;
+    font-family: var(--font-beachday);
+    font-size: var(--font-title-large);
+    color: var(--text-light);
 }
 
 .intro-text p {
-    font-family: 'fredoka', Arial, sans-serif;
-    font-size: 2rem;
+    font-family: var(--font-fredoka);
+    font-size: var(--font-text-large);
     max-width: 55ch;
     word-wrap: break-word;
-    color: #ddd;
+    color: var(--text-light);
 }
 
 /* ===========================
@@ -125,16 +185,16 @@ CURRICULUM SECTION
 =========================== */
 section.curriculum-section {
     width: 90%;
-    margin: 2rem auto;
-    padding: 2rem;
-    background: rgba(255, 255, 255, 0.08);
-    border-radius: 36px;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.12);
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
-    border: 1px solid rgba(255, 255, 255, 0.18);
+    margin: var(--spacing-lg) auto;
+    padding: var(--spacing-lg);
+    background: var(--bg-glass-medium);
+    border-radius: var(--border-radius-large);
+    box-shadow: var(--shadow-medium);
+    backdrop-filter: var(--backdrop-blur-light);
+    -webkit-backdrop-filter: var(--backdrop-blur-light);
+    border: 1px solid var(--bg-glass-border-light);
     display: grid;
-    gap: 2rem;
+    gap: var(--spacing-lg);
     grid-template-columns: repeat(3, 1fr);
     grid-template-areas:
         "skills education hobbies"
@@ -160,29 +220,29 @@ section.curriculum-section {
 .curriculum-block {
     flex: 1 1 280px;
     min-width: 260px;
-    background: rgba(34, 34, 34, 0.12);
-    border-radius: 24px;
+    background: var(--bg-block-dark);
+    border-radius: var(--border-radius-medium);
     box-shadow: 0 2px 16px rgba(0,0,0,0.08);
-    padding: 1.5rem;
-    margin: 0.5rem;
-    color: #ddd;
+    padding: var(--spacing-md);
+    margin: var(--spacing-xs);
+    color: var(--text-light);
     display: flex;
     flex-direction: column;
     align-items: flex-start;
 }
 
 .curriculum-block h2 {
-    font-family: 'beachday', Arial, sans-serif;
+    font-family: var(--font-beachday);
     font-size: 2.5rem;
-    color: #fff;
-    margin-bottom: 1rem;
+    color: var(--text-white);
+    margin-bottom: var(--spacing-sm);
     letter-spacing: 0.04em;
-    text-shadow: 1px 1px 3px rgba(0,0,0,0.18);
+    text-shadow: var(--text-shadow-light);
 }
 
 .curriculum-block ul {
     list-style: disc inside;
-    font-family: 'beachday', Arial, sans-serif;
+    font-family: var(--font-beachday);
     font-size: 1.3rem;
     margin-left: 0;
     padding-left: 0;
@@ -190,7 +250,7 @@ section.curriculum-section {
 
 .curriculum-block li {
     margin-bottom: 0.7rem;
-    color: #eee;
+    color: var(--text-lighter);
     line-height: 1.5;
 }
 
@@ -206,9 +266,9 @@ SKILLS LIST & BARS
 
 .skills-list li {
     margin-bottom: 1.2rem;
-    font-family: 'fredoka', Arial, sans-serif;
-    font-size: 1.2rem;
-    color: #fff;
+    font-family: var(--font-fredoka);
+    font-size: var(--font-text-small);
+    color: var(--text-white);
     display: flex;
     flex-direction: column;
 }
@@ -216,7 +276,7 @@ SKILLS LIST & BARS
 .skill-bar {
     width: 100%;
     height: 18px;
-    background: rgba(119, 157, 103, 0.38);
+    background: var(--bg-skill-bar);
     border-radius: 9px;
     margin-top: 0.4rem;
     overflow: hidden;
@@ -225,10 +285,10 @@ SKILLS LIST & BARS
 
 .skill-level {
     height: 100%;
-    background: linear-gradient(90deg, #779d67 0%, #b7e2c3 100%);
+    background: var(--gradient-skill-bar);
     border-radius: 0 50px 50px 0;
     width: 0%;
-    transition: width 0.7s cubic-bezier(0.4,0,0.2,1);
+    transition: width var(--transition-smooth);
     will-change: width;
     backface-visibility: hidden;
     transform: translate3d(0,0,0);
@@ -240,57 +300,57 @@ SKILLS LIST & BARS
 }
 
 /* ===========================
-    CONTACT
-    =========================== */
+CONTACT SECTION
+=========================== */
 .contact-block ul a {
     all: unset;
-    color: #ddd;
+    color: var(--text-light);
     will-change: color;
     text-decoration: none;
-    transition: color 0.3s ease;
+    transition: color var(--transition-fast);
     word-break: break-all;
 }
 
 .contact-block ul a:hover {
-    color: #62ad77;
+    color: var(--primary-green-hover);
     cursor: pointer;
     will-change: color;
 }
 
 /* ===========================
-    Projects
-    =========================== */
+PROJECTS SECTION
+=========================== */
 main #projects-title {
-    font-family: 'beachday', Arial, sans-serif;
-    font-size: 5rem;
-    color: #fff;
+    font-family: var(--font-beachday);
+    font-size: var(--font-title-medium);
+    color: var(--text-white);
     text-align: center;
-    margin: 2rem 0;
+    margin: var(--spacing-lg) 0;
 }
+
 .project-section {
     width: 90%;
-    margin: 5rem auto;
-    padding: 2rem 0;
-    background: rgba(255, 255, 255, 0.08);
-    border-radius: 36px;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.12);
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
-    border: 1px solid rgba(255, 255, 255, 0.18);
+    margin: var(--spacing-xl) auto;
+    padding: var(--spacing-lg) 0;
+    background: var(--bg-glass-medium);
+    border-radius: var(--border-radius-large);
+    box-shadow: var(--shadow-medium);
+    backdrop-filter: var(--backdrop-blur-light);
+    -webkit-backdrop-filter: var(--backdrop-blur-light);
+    border: 1px solid var(--bg-glass-border-light);
 }
 
 /* ===========================
-    PROJECT CAROUSEL
-    =========================== */
+PROJECT CAROUSEL
+=========================== */
 .project-carousel {
     text-align: center;
     margin-bottom: 2em;
     position: relative;
     overflow: hidden;
-    /* will-change: auto; */
-    padding: 1rem;
-    /* transform: translate3d(0,0,0); */
+    padding: var(--spacing-sm);
 }
+
 .carousel-images {
     display: flex;
     justify-content: center;
@@ -300,10 +360,10 @@ main #projects-title {
     transform: translate3d(0,0,0);
 }
 
-.project-carousel [id^="carousel-prev"]{
+.project-carousel [id^="carousel-prev"],
+.project-carousel [id^="carousel-next"] {
     all: unset;
     position: absolute;
-    left: 0;
     top: 50%;
     transform: translateY(-50%);
     z-index: 2;
@@ -311,36 +371,28 @@ main #projects-title {
     width: 5%;
     height: 100%;
     cursor: pointer;
-    color: #fff;
+    color: var(--text-white);
     opacity: .6;
     will-change: opacity;
     backface-visibility: hidden;
+    transition: opacity var(--transition-fast);
 }
+
+.project-carousel [id^="carousel-prev"] {
+    left: 0;
+}
+
+.project-carousel [id^="carousel-next"] {
+    right: 0;
+}
+
 .project-carousel [id^="carousel-prev"]:hover,
 .project-carousel [id^="carousel-next"]:hover {
     opacity: 1;
-    transition: opacity 0.3s ease;
-    will-change: opacity;
-    backface-visibility: hidden;
 }
-.project-carousel [id^="carousel-next"]{
-    all: unset;
-    position: absolute;
-    right: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 2;
-    font-size: 4rem;
-    width: 5%;
-    height: 100%;
-    cursor: pointer;
-    color: #fff;
-    opacity: .6;
-    will-change: opacity;
-    backface-visibility: hidden;
-}
+
 .carousel-img {
-    border-radius: 10px;
+    border-radius: var(--border-radius-small);
     will-change: transform, opacity;
     backface-visibility: hidden;
     transform: translate3d(0,0,0);
@@ -351,93 +403,87 @@ main #projects-title {
     max-width: 75vw;
     height: auto;
     max-height: fit-content;
-    box-shadow: 0 0 10px #aaa;
+    box-shadow: var(--shadow-image);
     z-index: 2;
     will-change: transform;
     backface-visibility: hidden;
     transform: translate3d(0,0,0);
 }
-.carousel-left {
-    width: 75vw;
-    max-width: 75vw;
-    height: auto;
-    max-height: fit-content;
-    z-index: 2;
-    opacity: 0.6;
-    position: absolute;
-    left: 0px;
-    transform: translate(-92%, 0px) scale(0.95);
-    z-index: 0;
-    will-change: transform, opacity;
-    backface-visibility: hidden;
-}
 
+.carousel-left,
 .carousel-right {
     width: 75vw;
     max-width: 75vw;
     height: auto;
     max-height: fit-content;
-    z-index: 2;
+    z-index: 0;
     opacity: 0.6;
     position: absolute;
-    right: 0px;
-    transform: translate(92%, 0px) scale(0.95);
-    z-index: 0;
+    transform: scale(0.95);
     will-change: transform, opacity;
     backface-visibility: hidden;
 }
 
+.carousel-left {
+    left: 0px;
+    transform: translate(-92%, 0px) scale(0.95);
+}
+
+.carousel-right {
+    right: 0px;
+    transform: translate(92%, 0px) scale(0.95);
+}
+
 /* ===========================
-    PROJECT INFO
-    =========================== */
+PROJECT INFO
+=========================== */
 .project-info {
-    padding: 0 2rem;
+    padding: 0 var(--spacing-lg);
 }
 
 .project-title {
-    font-family: 'beachday', Arial, sans-serif;
-    font-size: 3rem;
-    color: #fff;
+    font-family: var(--font-beachday);
+    font-size: var(--font-title-small);
+    color: var(--text-white);
 }
 
 .project-description {
-    font-family: 'fredoka', Arial, sans-serif;
-    font-size: 1.5rem;
-    color: #ddd;
-    margin-bottom: 1.5rem;
+    font-family: var(--font-fredoka);
+    font-size: var(--font-text-medium);
+    color: var(--text-light);
+    margin-bottom: var(--spacing-md);
 }
 
-/* More Project Info Styling */
 .more-project-info {
     list-style: none;
     padding: 0;
-    margin: 1.5rem 0 0 0;
-    font-family: 'fredoka', Arial, sans-serif;
+    margin: var(--spacing-md) 0 0 0;
+    font-family: var(--font-fredoka);
 }
 
 .more-project-info li {
-    font-size: 1.2rem;
-    color: #eee;
+    font-size: var(--font-text-small);
+    color: var(--text-lighter);
     margin-bottom: 0.8rem;
     line-height: 1.5;
 }
 
 .more-project-info strong {
-    color: #fff;
+    color: var(--text-white);
     font-weight: 600;
 }
 
 .more-project-info a {
     all: unset;
-    color: #ddd;
+    color: var(--text-light);
     will-change: color;
     text-decoration: none;
-    transition: color 0.3s ease;
+    transition: color var(--transition-fast);
     word-break: break-all;
 }
 
 .more-project-info a:hover {
-    color: #afdbbc;
+    color: var(--primary-green-soft);
     cursor: pointer;
     will-change: color;
 }
@@ -607,137 +653,133 @@ main #projects-title {
 }
 
 /* ===========================
-    RESPONSIVE DESIGN
-    =========================== */
-    @media (max-width: 1200px) {
-        #title-portfolio {
-            font-size: 6rem;
-        }
-        .intro-text h2 {
-            font-size: 4rem;
-        }
-        .intro-text p {
-            font-size: 1.5rem;
-        }
-        main #projects-title {
-            font-size: 3rem;
-        }
-        .project-title {
-            font-size: 2rem;
-        }
-        section.curriculum-section {
-            grid-template-columns: 1fr 1fr;
-            grid-template-areas:
-                "skills skills"
-                "programs education"
-                "hobbies hobbies"
-                "contact contact";
-            gap: 1rem;
-            padding: 1rem;
-        }
+RESPONSIVE DESIGN
+=========================== */
+@media (max-width: 1200px) {
+    :root {
+        --font-title-hero: 6rem;
+        --font-title-large: 4rem;
+        --font-title-medium: 3rem;
+        --font-title-small: 2rem;
+        --font-text-large: 1.5rem;
     }
+    
+    section.curriculum-section {
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas:
+            "skills skills"
+            "programs education"
+            "hobbies hobbies"
+            "contact contact";
+        gap: var(--spacing-sm);
+        padding: var(--spacing-sm);
+    }
+}
 
-    @media (max-width: 900px) {
-        section.intro-section {
-            /* flex-direction: column; */
-            align-items: center;
-            padding: 1rem;
-        }
-        section.intro-section img.intro-image {
-            margin: 0 0 1rem 0;
-            width: 100%;
-            max-width: 200px;
-            object-fit: cover;
-        }
-        .intro-text h2 {
-            font-size: 2.5rem;
-        }
-        .intro-text p {
-            font-size: 1.2rem;
-        }
-        section.curriculum-section {
-            grid-template-columns: 1fr 1fr;
-            grid-template-areas:
-                "skills skills"
-                "programs education"
-                "hobbies hobbies"
-                "contact contact";
-            gap: 1rem;
-            padding: 1rem;
-        }
-        .curriculum-block {
-            min-width: 180px;
-            padding: 1rem;
-        }
-        .carousel-center,
-        .carousel-left,
-        .carousel-right {
-            width: 95vw;
-            max-width: 95vw;
-        }
+@media (max-width: 900px) {
+    section.intro-section {
+        align-items: center;
+        padding: var(--spacing-sm);
     }
+    
+    section.intro-section img.intro-image {
+        margin: 0 0 var(--spacing-sm) 0;
+        width: 100%;
+        max-width: 200px;
+        object-fit: cover;
+    }
+    
+    .intro-text h2 {
+        font-size: 2.5rem;
+    }
+    
+    .intro-text p {
+        font-size: var(--font-text-small);
+    }
+    
+    section.curriculum-section {
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas:
+            "skills skills"
+            "programs education"
+            "hobbies hobbies"
+            "contact contact";
+        gap: var(--spacing-sm);
+        padding: var(--spacing-sm);
+    }
+    
+    .curriculum-block {
+        min-width: 180px;
+        padding: var(--spacing-sm);
+    }
+    
+    .carousel-center,
+    .carousel-left,
+    .carousel-right {
+        width: 95vw;
+        max-width: 95vw;
+    }
+}
 
-    @media (max-width: 600px) {
-        #title-portfolio {
-            font-size: 2.5rem;
-            margin-top: 0.5rem;
-        }
-        section.intro-section {
-            width: 100%;
-            padding: 0.5rem;
-        }
-        .intro-text h2 {
-            font-size: 1.5rem;
-        }
-        .intro-text p {
-            font-size: 1rem;
-        }
-        section.curriculum-section {
-            grid-template-columns: 1fr;
-            grid-template-areas:
-                "skills"
-                "education"
-                "hobbies"
-                "programs"
-                "contact";
-            gap: 0.5rem;
-            padding: 0.5rem;
-        }
-        .curriculum-block {
-            min-width: 0;
-            padding: 0.5rem;
-            margin: 0.2rem;
-        }
-        main #projects-title {
-            font-size: 1.5rem;
-            margin: 1rem 0;
-        }
-        .project-title {
-            font-size: 1.2rem;
-        }
-        .project-description {
-            font-size: 1rem;
-        }
-        .project-section {
-            width: 100%;
-            padding: 1rem 0;
-        }
-        .carousel-center,
-        .carousel-left,
-        .carousel-right {
-            width: 100vw;
-            max-width: 100vw;
-        }
-        .project-info {
-            padding: 0 0.5rem;
-        }
-        .more-project-info li {
-            font-size: 1rem;
-        }
-        .skills-list li {
-            font-size: 1rem;
-        }
-        .skill-bar {
-            height: 12px;
-        }
+@media (max-width: 600px) {
+    :root {
+        --font-title-hero: 2.5rem;
+        --font-title-large: 1.5rem;
+        --font-title-medium: 1.5rem;
+        --font-title-small: 1.2rem;
+        --font-text-large: 1rem;
+        --font-text-medium: 1rem;
+        --font-text-small: 1rem;
     }
+    
+    #title-portfolio {
+        margin-top: var(--spacing-xs);
+    }
+    
+    section.intro-section {
+        width: 100%;
+        padding: var(--spacing-xs);
+    }
+    
+    section.curriculum-section {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "skills"
+            "education"
+            "hobbies"
+            "programs"
+            "contact";
+        gap: var(--spacing-xs);
+        padding: var(--spacing-xs);
+    }
+    
+    .curriculum-block {
+        min-width: 0;
+        padding: var(--spacing-xs);
+        margin: 0.2rem;
+    }
+    
+    main #projects-title {
+        margin: var(--spacing-sm) 0;
+    }
+    
+    .project-section {
+        width: 100%;
+        padding: var(--spacing-sm) 0;
+    }
+    
+    .carousel-center,
+    .carousel-left,
+    .carousel-right {
+        width: 100vw;
+        max-width: 100vw;
+    }
+    
+    .project-info {
+        padding: 0 var(--spacing-xs);
+    }
+    
+    .skill-bar {
+        height: 12px;
+    }
+}
