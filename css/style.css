@@ -7,6 +7,23 @@ RESET & BASE STYLES
     padding: 0;
 }
 
+/* Custom Scrollbar - Coherent with site colors, transparent background */
+::-webkit-scrollbar {
+    width: 12px;
+    background: transparent;
+}
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #779d67 0%, #b7e2c3 100%);
+    border-radius: 10px;
+    border: 2px solid rgba(255,255,255,0.18);
+}
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(135deg, #62ad77 0%, #b7e2c3 100%);
+}
+
 body {
     font-family: 'Segoe UI', Arial, sans-serif;
     background: url('../res/background.png') no-repeat top left / cover;
