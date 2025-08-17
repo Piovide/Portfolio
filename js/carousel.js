@@ -4,6 +4,9 @@ document.addEventListener('DOMContentLoaded', function() {
     
     createProjectCarousel('project_1', carousels[0]);
     createProjectCarousel('project_2', carousels[1]);
+    createProjectCarousel('project_3', carousels[2]);
+    createProjectCarousel('project_4', carousels[3]);
+    createProjectCarousel('project_5', carousels[4]);
 });
 
 async function createProjectCarousel(projectName, container) {
