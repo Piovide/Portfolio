@@ -1,0 +1,128 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html {
+    font-family: sans-serif;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: url('../../res/background.png') no-repeat top left / cover;
+}
+
+.platform-container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+
+#cheerpjDisplay {
+    width: 100% !important;
+    height: 100% !important;
+    border: 0;
+    display: block;
+}
+
+#cheerpjDisplay svg {
+    overflow: hidden;
+}
+#log-container {
+    width: 30%;
+    position: absolute;
+    text-align: left;
+    color: white;
+    font-size: 14px;
+    text-shadow: 1px 1px 2px black;
+    z-index: 99;
+    top: 2px;
+    right: 5px;
+}
+
+#log-container p {
+    margin: 5px 0;
+    padding: 5px;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    opacity: 1;
+    transition: all 1s ease-in-out;
+}
+
+.cheerpjNC::after {
+    position: absolute;
+    content: 'CHEERPJ COMMUNITY EDITION - FOR PERSONAL AND NON-BUSINESS USE ONLY';
+    left: 0;
+    right: 0;
+    bottom: 0;
+    font-weight: 700;
+    background: rgba(250, 250, 250, 0.9);
+    border: 0px solid transparent !important;
+    border-radius: 50px;
+    margin: 5px auto;
+    padding: 4px 0px 2px 0px;
+    pointer-events: auto;
+    width: 25%;
+    cursor: pointer;
+    z-index: -999;
+}
+
+.cheerpjNC:before {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    font-weight: 700;
+    background: rgba(250, 250, 250, 0.9);
+    border: 0px !important;
+    border-radius: 50px;
+    margin: 5px auto;
+    padding: 4px 0px 2px 0px;
+    pointer-events: auto;
+    width: 75%;
+    cursor: pointer;
+    z-index: -999;
+}
+
+.cjWindow{
+    background: none !important;
+}
+
+canvas.cjSwapped{
+    border-radius: 24px;
+}
+
+#log-container p.fade-out {
+    opacity: 0;
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fade-out {
+    from {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+}
+
+#log-container p {
+    animation: fade-in .5s;
+}
+
+#log-container p.fade-out {
+    animation: fade-out .5s forwards;
+}
