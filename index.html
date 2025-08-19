@@ -7,15 +7,14 @@
     <link rel="stylesheet" href="css/transiction.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body><div class="scrollable"><div class="position"><div class="knob"></div></div><div class="content">
-    <a href="Platformer/" onclick="handleClick(event)">prova</a>
-    <div class="transiction-container">
-        <div class="transiction-bar"></div>
-        <div class="transiction-bar"></div>
-        <div class="transiction-bar"></div>
-        <div class="transiction-bar"></div>
-        <div class="transiction-bar"></div>
-    </div>
+<body>
+<div class="transiction-container">
+    <div class="transiction-bar"></div>
+    <div class="transiction-bar"></div>
+    <div class="transiction-bar"></div>
+    <div class="transiction-bar"></div>
+    <div class="transiction-bar"></div>
+</div>
     <header>
         <h1 id="title-portfolio">PORTFOLIO</h1>
     </header>
@@ -23,9 +22,13 @@
         <img src="res/profile.png" alt="Immagine Profilo" class="intro-image">
         <div class="intro-text">
             <h2>Ciao!</h2>
-            <p>Mi chiamo Davide Piovesan yap yap yap yap yap yap yap yap yap yap yap yap yap yap yap yap
-                yap yap yap yap yap yap yap yap yap yap yap yap yap yap yap yap yap yap yap yap yap yap yap
-                yap yap yap yap yap yap yap yap.
+            <p>Sono Davide Piovesan, ho <span id="eta"></span> anni e sono un programmatore 
+                appassionato di videogiochi e sviluppo software. 
+                Mi piace sperimentare con diversi linguaggi e tecnologie, 
+                    dal game development allo sviluppo di applicazioni e siti web.</p>
+            <script>
+                document.getElementById("eta").textContent = new Date().getFullYear() - 2004 - (new Date().getMonth() < 4 || (new Date().getMonth() === 4 && new Date().getDate() < 10) ? 1 : 0);
+            </script>
             </p>
         </div>
     </section>
@@ -148,11 +151,11 @@
             <div class="project-carousel">
             </div>
             <div class="project-info">
-                <h2 class="project-title">Platformer</h2>
-                <p class="project-description">
-                    Gioco platform 2D, sviluppato interamente in Java, 
-                    per un progetto di coppia di fine anno di quarta superiore.
-                </p>
+                <h2 class="project-title">
+                    <a href="Platformer/" onclick="handleClick(event)" title="Vai alla pagina del gioco" class="project-link">Platformer<i class="fas fa-external-link-alt" style="vertical-align: text-top; font-size: .5em;"></i></a></h2>
+                    <p class="project-description">
+                        Un progetto scolastico di gruppo libero che ho deciso di trasformare in un vero e proprio gioco platform 2D. Il gioco comprende 5 livelli, popolati da nemici con comportamenti diversi, ostacoli ambientali.
+                    </p>
                 <ul class="more-project-info">
                     <li><strong>Data di inizio</strong>: Marzo 2024</li>
                     <li><strong>Data di fine</strong>: Maggio 2024</li>
@@ -168,9 +171,15 @@
             <div class="project-info">
                 <h2 class="project-title">Map Builder</h2>
                 <p class="project-description">
-                    Questo progetto è un'applicazione sviluppata in parallelo con il gioco platform.
-                    Permette di creare e modificare mappe di gioco in modo intuitivo e convertirle in bitmap
-                    (il formato usato dal gioco per leggere le mappe).
+                    Applicazione sviluppata parallelamente al platformer per semplificare la creazione dei livelli di gioco. L’interfaccia è composta da una toolbar laterale e da una canvas centrale in cui disegnare la mappa. Sono presenti funzioni come:
+                </p>
+                <ul class="project-desc-list">
+                    <li>salvataggio in bitmap,</li>
+                    <li>gomma e cancella,</li>
+                    <li>rotazione e variazioni dei tile premendo R.</li>
+                </ul>
+                <p class="project-description">
+                    Questo tool ha reso molto più veloce e intuitivo lo sviluppo delle mappe per il platform.
                 </p>
                 <ul class="more-project-info">
                     <li><strong>Data di inizio</strong>: Marzo 2024</li>
@@ -187,13 +196,20 @@
             <div class="project-info">
                 <h2 class="project-title">Wiki Appunti</h2>
                 <p class="project-description">
-                    Applicazione sviluppata in Flutter per la scrittura, gestione e condivisione di appunti.
-                    Permette di creare note, organizzarle in categorie e condividerle con altri utenti.
+                    Progetto nato come strumento personale per organizzare i miei appunti in vista dell’esame di stato, con l’idea di espanderlo in futuro per un utilizzo collaborativo tra studenti.
+                    Le funzionalità principali includono:
+                </p>
+                <ul class="project-desc-list">
+                    <li>login e registrazione con verifica via email,</li>
+                    <li>scrittura in Markdown con una toolbar che semplifica l’inserimento di elementi comuni (grassetto, corsivo, liste, titoli, code snippet).</li>
+                </ul>
+                <p class="project-description">
+                    Mi sono occupato soprattutto del frontend Flutter, in particolare dell’editor di scrittura, e della gestione del web service backend.
                 </p>
                 <ul class="more-project-info">
-                    <li><strong>Data di inizio</strong>: Aprile 2025</li>
+                    <li><strong>Data di inizio</strong>: Marzo 2025</li>
                     <li><strong>Data di fine</strong>: Maggio 2025</li>
-                    <li><strong>Technologie utilizzate</strong>: Flutter, Dart, PHP, MySQL</li>
+                    <li><strong>Technologie utilizzate</strong>: Flutter, Dart, PHP</li>
                     <li><strong>Collaboratori</strong>: 
                         <i class="fab fa-github" style="vertical-align: middle; margin-right: 5px;"></i><a href="https://github.com/giovanniceolin" target="_blank">Ceolin Giovanni</a>, 
                         <i class="fab fa-github" style="vertical-align: middle; margin-right: 5px;"></i><a href="https://github.com/furlan-marco" target="_blank">Marco Furlan</a>
@@ -208,8 +224,16 @@
             <div class="project-info">
                 <h2 class="project-title">Gestione Progetto</h2>
                 <p class="project-description">
-                    Sito creato per gestire il progetto finale dell'ultimo anno di scuola superiore.
-                    Permette di tenere traccia delle attività, monitorare lo stato di avanzamento e visualizzare le scadenze.
+                    Un sito sviluppato per monitorare i progressi di un progetto di gruppo. Consente ai membri di aggiungere task con titolo, descrizione, data e durata in ore.
+                    Le funzionalità comprendono:
+                </p>
+                <ul class="project-desc-list">
+                    <li>lista delle task condivisa,</li>
+                    <li>grafico con il conteggio delle ore totali per ogni membro,</li>
+                    <li>una sezione “Info” che integra Google API per visualizzare direttamente il WBS e il RACI da un foglio Excel di Google.</li>
+                </ul>
+                <p class="project-description">
+                    Pensato inizialmente per il mio team, con piccole modifiche potrebbe diventare uno strumento utile anche ad altri gruppi di lavoro.
                 </p>
                 <ul class="more-project-info">
                     <li><strong>Data di inizio</strong>: Novembre 2024</li>
@@ -225,8 +249,8 @@
             <div class="project-info">
                 <h2 class="project-title">Solariel</h2>
                 <p class="project-description">
-                    Progetto di gruppo per la creazione di un alpha di un videogioco in Unreal Engine.
-                    Il gioco è un Survival in prima persona ambientato in un mondo solarpunk.
+                    Un progetto di gruppo nato da una mia idea, ispirata allo stile solarpunk del video Dear Alice. L’obiettivo era realizzare un survival in prima persona ambientato in un mondo solarpunk, ma il progetto si è fermato a una alpha demo tecnica a causa dell’inesperienza del team con Unreal Engine.
+                    <br>Mi sono occupato della creazione della mappa di gioco, della UI dell’inventario, e della logica di interazione con gli oggetti e la hotbar. Nonostante le difficoltà, il progetto ha permesso di sperimentare e consolidare competenze nel game design con Unreal Engine.
                 </p>
                 <ul class="more-project-info">
                     <li><strong>Data di inizio</strong>: Gennaio 2025</li>
@@ -236,13 +260,39 @@
                         <i class="fab fa-github" style="vertical-align: middle; margin-right: 5px;"></i><a href="" target="_blank">Bettello Nicholas</a>, 
                         <i class="fab fa-github" style="vertical-align: middle; margin-right: 5px;"></i><a href="https://github.com/giovanniceolin" target="_blank">Ceolin Giovanni</a>, 
                         <i class="fab fa-github" style="vertical-align: middle; margin-right: 5px;"></i><a href="https://github.com/furlan-marco" target="_blank">Marco Furlan</a>, 
-                        <i class="fab fa-github" style="vertical-align: middle; margin-right: 5px;"></i><a href="" target="_blank">Mestriner Paola</a>, 
+                        <i class="fab fa-github" style="vertical-align: middle; margin-right: 5px;"></i><a href="" target="_blank">Mestriner Paola</a>
                     </li>
                     <li><strong>Technologie utilizzate</strong>: Unreal Engine, C++</li>
                 </ul>
             </div>
         </section>
-        
+        <section class="project-section">
+            <div class="project-carousel">
+            </div>
+            <div class="project-info">
+                <h2 class="project-title">Zenless Zone Zero Calculator</h2>
+                <p class="project-description">
+                    Un sito pensato per i giocatori di Zenless Zone Zero, con l’obiettivo di aiutare a ottimizzare la build dei propri personaggi. L’applicazione consente di:
+                </p>
+                <ul class="project-desc-list">
+                    <li>selezionare diversi tipi di attacchi,</li>
+                    <li>calcolare il danno prodotto,</li>
+                    <li>trovare la combinazione migliore di artefatti e arma.</li>
+                </ul>
+                <p class="project-description">
+                    I dati dei personaggi vengono salvati in JSON nel local storage del browser, così da mantenere la configurazione anche nelle sessioni successive. Attualmente il progetto è in fase embrionale, ma l’obiettivo è renderlo uno strumento pratico e intuitivo per la community.
+                </p>
+                <ul class="more-project-info">
+                    <li><strong>Data di inizio</strong>: Gennaio 2025</li>
+                    <li><strong>Data di fine</strong>: WIP</li>
+                    <li><strong>Collaboratori</strong>: 
+                        <i class="fab fa-github" style="vertical-align: middle; margin-right: 5px;"></i><a href="https://github.com/GitShitOn" target="_blank">Franceschet Tommaso</a>
+                    </li>
+                    <li><strong>Technologie utilizzate</strong>: TypeScript, PHP, CSS</li>
+                    <li><strong>Link al repository</strong>: <a href="https://github.com/Piovide/ZZZ-Calc" target="_blank">GitHub</a></li>
+                </ul>
+            </div>
+        </section>
     </main>
         </div>
     </div>
@@ -250,5 +300,4 @@
 <script src="js/skillbar_anim.js"></script>
 <script src="js/carousel.js"></script>
 <script src="js/transiction.js"></script>
-<script src="js/scrollbar.js"></script>
 </html>

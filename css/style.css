@@ -508,12 +508,37 @@ PROJECT INFO
     font-size: var(--font-title-small);
     color: var(--text-white);
 }
+.project-title a {
+    all: unset;
+    color: var(--text-light);
+    will-change: color;
+    text-decoration: none;
+    transition: color var(--transition-fast);
+    word-break: break-all;
+}
+.project-title a:hover {
+    color: var(--primary-green-hover);
+    cursor: pointer;
+    will-change: color;
+}
 
 .project-description {
     font-family: var(--font-fredoka);
     font-size: var(--font-text-medium);
     color: var(--text-light);
-    margin-bottom: var(--spacing-md);
+}
+
+.project-desc-list {
+    font-family: var(--font-fredoka);
+    font-size: var(--font-text-small);
+    color: var(--text-light);
+    margin: var(--spacing-xs);
+    padding-left: 1.5em;
+    list-style-type: disc;
+}
+
+.project-desc-list li {
+    line-height: 1.5;
 }
 
 .more-project-info {
@@ -526,6 +551,7 @@ PROJECT INFO
 .more-project-info li {
     font-size: var(--font-text-small);
     color: var(--text-lighter);
+    margin-top: var(--spacing-md);
     margin-bottom: 0.8rem;
     line-height: 1.5;
 }
