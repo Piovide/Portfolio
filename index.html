@@ -24,9 +24,9 @@
         <img src="res/profile.png" alt="Immagine Profilo" class="intro-image">
         <div class="intro-text">
             <h2>Ciao!</h2>
-            <p>Sono Davide Piovesan, ho <span id="eta"></span> anni e sono un programmatore 
-                appassionato di videogiochi e sviluppo software. 
-                Mi piace sperimentare con diversi linguaggi e tecnologie, 
+            <p>Sono Davide Piovesan, ho <span id="eta"></span> anni e sono un programmatore
+                appassionato di videogiochi e sviluppo software.
+                Mi piace sperimentare con diversi linguaggi e tecnologie,
                     dal game development allo sviluppo di applicazioni e siti web.</p>
             <script>
                 document.getElementById("eta").textContent = new Date().getFullYear() - 2004 - (new Date().getMonth() < 4 || (new Date().getMonth() === 4 && new Date().getDate() < 10) ? 1 : 0);
@@ -54,6 +54,12 @@
                 JavaScript
                 <div class="skill-bar">
                 <div class="skill-level" data-percentage="65"></div>
+                </div>
+            </li>
+            <li>
+                TypeScript
+                <div class="skill-bar">
+                <div class="skill-level" data-percentage="50"></div>
                 </div>
             </li>
             <li>
@@ -116,8 +122,11 @@
             </ul>
             <h2>Esperienze</h2>
             <ul>
-                <li>Stage Erasmus+ presso Syret GmbH, <br> Halle (Germania)<br>
-                    Maggio 2024 - Luglio 2024
+                <li>Stage Erasmus+ presso Syret GmbH,<br> 
+                    Halle (Germania)<br>
+                    Maggio 2024 - Luglio 2024<br>
+                    <a href="https://syret.de/" target="_blank">Sito web</a><br>
+                    Mi sono occupato di sviluppare una BadUSB per il pentesting
                 </li>
             </ul>
         </div>
@@ -299,8 +308,30 @@
             </div>
         </section>
     </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Contatti</h3>
+                <p>
+                    <i class="fas fa-envelope"></i>
+                    <a href="mailto:davidepiovesan9@gmail.com">davidepiovesan9@gmail.com</a>
+                </p>
+                <p>
+                    <i class="fab fa-github"></i>
+                    <a href="https://github.com/Piovide" target="_blank">GitHub</a>
+                </p>
+            </div>
+            <div class="footer-section">
+                <h3>Portfolio</h3>
+                <p>Sviluppatore Full Stack specializzato in game development e applicazioni web.</p>
+            </div>
         </div>
-    </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Davide Piovesan. Tutti i diritti riservati.</p>
+        </div>
+    </footer>
+    
 </body>
 <script src="js/skillbar_anim.js"></script>
 <script src="js/carousel.js"></script>

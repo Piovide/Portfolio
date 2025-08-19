@@ -219,9 +219,13 @@ section.intro-section {
 
 section.intro-section img.intro-image {
     border-radius: 26px;
+    margin: auto;
     margin-right: var(--spacing-lg);
     box-shadow: var(--shadow-soft);
     object-fit: contain;
+    box-sizing: content-box;
+    height: fit-content;
+    width: fit-content;
 }
 
 .intro-text {
@@ -364,7 +368,7 @@ SKILLS LIST & BARS
 /* ===========================
 CONTACT SECTION
 =========================== */
-.contact-block ul a {
+a {
     all: unset;
     color: var(--text-light);
     will-change: color;
@@ -373,7 +377,7 @@ CONTACT SECTION
     word-break: break-all;
 }
 
-.contact-block ul a:hover {
+a:hover {
     color: var(--primary-green-hover);
     cursor: pointer;
     will-change: color;
@@ -423,6 +427,30 @@ PROJECT CAROUSEL
     transform: translate3d(0,0,0);
 }
 
+/* Placeholder per mantenere l'aspect ratio durante il caricamento */
+.carousel-placeholder {
+    width: 75vw;
+    max-width: 75vw;
+    background: linear-gradient(90deg, 
+        rgba(255,255,255,0.1) 25%, 
+        rgba(255,255,255,0.2) 50%, 
+        rgba(255,255,255,0.1) 75%);
+    background-size: 200% 100%;
+    animation: skeleton-loading 1.5s infinite;
+    border-radius: var(--border-radius-small);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-light);
+    font-size: var(--font-text-medium);
+}
+
+@keyframes skeleton-loading {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
 .project-carousel [id^="carousel-prev"],
 .project-carousel [id^="carousel-next"] {
     all: unset;
@@ -459,6 +487,12 @@ PROJECT CAROUSEL
     will-change: transform, opacity;
     backface-visibility: hidden;
     transform: translate3d(0,0,0);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.carousel-img:hover {
+    transform: translate3d(0,0,0) scale(1.02);
 }
 
 .carousel-center {
@@ -495,6 +529,57 @@ PROJECT CAROUSEL
 .carousel-right {
     right: 0px;
     transform: translate(92%, 0px) scale(0.95);
+}
+
+/* ===========================
+IMAGE ZOOM MODAL
+=========================== */
+.image-zoom-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.image-zoom-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.image-zoom-content {
+    width: 80vw;
+    position: relative;
+    cursor: default;
+}
+
+.image-zoom-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: var(--border-radius-small);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    transform: scale(0.8);
+    transition: transform 0.3s ease;
+}
+
+.image-zoom-overlay.active .image-zoom-img {
+    transform: scale(1);
+}
+
+/* Previene lo scroll quando il modal è aperto */
+body.image-zoom-active {
+    overflow: hidden;
 }
 
 /* ===========================
@@ -742,6 +827,80 @@ PROJECT INFO
 }
 
 /* ===========================
+FOOTER STYLES
+=========================== */
+
+footer {
+    background: var(--bg-glass-light);
+    backdrop-filter: blur(200px);    
+    background-color: rgba(0, 50, 45, .1);
+    border-top: 1px solid var(--bg-glass-border);
+    margin-top: var(--spacing-xl);
+    padding: var(--spacing-lg) var(--spacing-md);
+    color: var(--text-light);
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    max-width: 1200px;
+    margin: 0 auto;
+    gap: var(--spacing-lg);
+}
+
+.footer-section {
+    flex: 1;
+}
+
+.footer-section h3 {
+    color: var(--primary-green);
+    font-family: var(--font-fredoka);
+    font-size: var(--font-text-large);
+    margin-bottom: var(--spacing-sm);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.footer-section p {
+    font-size: var(--font-text-small);
+    line-height: 1.6;
+    margin-bottom: var(--spacing-xs);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+}
+
+.footer-section a {
+    color: var(--text-lighter);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-section a:hover {
+    color: var(--primary-green);
+}
+
+.footer-section i {
+    color: var(--primary-green);
+    width: 20px;
+    text-align: center;
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: var(--spacing-md);
+    margin-top: var(--spacing-md);
+    border-top: 1px solid var(--bg-glass-border);
+}
+
+.footer-bottom p {
+    font-size: var(--font-text-xs);
+    color: var(--text-lighter);
+    opacity: 0.8;
+}
+
+/* ===========================
 RESPONSIVE DESIGN
 =========================== */
 @media (max-width: 1200px) {
@@ -808,6 +967,11 @@ RESPONSIVE DESIGN
         width: 95vw;
         max-width: 95vw;
     }
+    
+    .carousel-placeholder {
+        width: 95vw;
+        max-width: 95vw;
+    }
 }
 
 @media (max-width: 600px) {
@@ -860,9 +1024,13 @@ RESPONSIVE DESIGN
     .curriculum-block h2 {
         font-size: var(--font-title-large);
     }
-
+    
     .curriculum-block ul {
         font-size: var(--font-text-small);
+    }
+
+    .skill-bar {
+        height: 12px;
     }
     
     main #projects-title {
@@ -874,12 +1042,23 @@ RESPONSIVE DESIGN
     .project-section {
         width: 95%;
         padding: var(--spacing-sm) 0;
+        backdrop-filter: blur(10px);
     }
     
     .carousel-center,
     .carousel-left,
     .carousel-right {
         width: 75vw;
+    }
+    
+    .carousel-placeholder {
+        width: 75vw;
+    }
+    
+    /* Modal zoom responsive */
+    .image-zoom-content {
+        max-width: 95vw;
+        max-height: 85vh;
     }
 
     .project-carousel [id^="carousel-prev"], .project-carousel [id^="carousel-next"] {
@@ -903,7 +1082,26 @@ RESPONSIVE DESIGN
         word-break: auto-phrase;
     }
     
-    .skill-bar {
-        height: 12px;
+    footer{
+        padding: var(--spacing-md) var(--spacing-sm);
+        backdrop-filter: blur(150px);
+    }
+
+    .footer-content {
+        flex-direction: column;
+        gap: var(--spacing-md);
+        text-align: center;
+    }
+    
+    .footer-content .footer-section {
+        margin: 0 auto;
+    }
+
+    .footer-section h3 {
+        font-size: var(--font-text-medium);
+    }
+    
+    .footer-section p {
+        justify-content: center;
     }
 }

@@ -2,6 +2,9 @@
 document.addEventListener('DOMContentLoaded', function() {
     const carousels = document.querySelectorAll('.project-carousel');
     
+    // Crea il modal di zoom una sola volta
+    createImageZoomModal();
+    
     createProjectCarousel('project_1', carousels[0]);
     createProjectCarousel('project_2', carousels[1]);
     createProjectCarousel('project_3', carousels[2]);
@@ -9,6 +12,68 @@ document.addEventListener('DOMContentLoaded', function() {
     createProjectCarousel('project_5', carousels[4]);
     createProjectCarousel('project_6', carousels[5]);
 });
+
+// Variabili globali per il modal di zoom
+let imageZoomOverlay = null;
+let isZoomActive = false;
+
+// Crea il modal di zoom
+function createImageZoomModal() {
+    if (imageZoomOverlay) return; // Evita duplicati
+    
+    imageZoomOverlay = document.createElement('div');
+    imageZoomOverlay.className = 'image-zoom-overlay';
+    imageZoomOverlay.innerHTML = `
+        <div class="image-zoom-content">
+            <img class="image-zoom-img" src="" alt="Immagine ingrandita">
+        </div>
+    `;
+    
+    // Aggiungi al body
+    document.body.appendChild(imageZoomOverlay);
+    
+    // Event listeners per chiudere il modal
+    const content = imageZoomOverlay.querySelector('.image-zoom-content');
+    
+    // Chiudi cliccando sull'overlay (ma non sul contenuto)
+    imageZoomOverlay.addEventListener('click', closeImageZoom);
+    content.addEventListener('click', (e) => e.stopPropagation());
+    
+    // Chiudi con ESC
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && isZoomActive) {
+            closeImageZoom();
+        }
+    });
+}
+
+// Apre l'immagine in zoom
+function openImageZoom(imageSrc) {
+    if (isZoomActive) return; // Previene aperture multiple
+    
+    isZoomActive = true;
+    const zoomImg = imageZoomOverlay.querySelector('.image-zoom-img');
+    zoomImg.src = imageSrc;
+    
+    // Attiva il modal
+    imageZoomOverlay.classList.add('active');
+    document.body.classList.add('image-zoom-active');
+}
+
+// Chiude il modal di zoom
+function closeImageZoom() {
+    if (!isZoomActive) return;
+    
+    isZoomActive = false;
+    imageZoomOverlay.classList.remove('active');
+    document.body.classList.remove('image-zoom-active');
+    
+    // Pulisci l'immagine dopo la transizione
+    setTimeout(() => {
+        const zoomImg = imageZoomOverlay.querySelector('.image-zoom-img');
+        zoomImg.src = '';
+    }, 300);
+}
 
 async function createProjectCarousel(projectName, container) {
     if (!container) return;
@@ -18,14 +83,19 @@ async function createProjectCarousel(projectName, container) {
     const prevBtnId = `carousel-prev-${carouselId}`;
     const nextBtnId = `carousel-next-${carouselId}`;
 
-    // Carousel HTML structure
+    // Inizializza con placeholder
     container.innerHTML = `
-    <div class="carousel-images"></div>
-    <button id="${prevBtnId}" type="button" aria-label="Immagine precedente">&#10094;</button>
-    <button id="${nextBtnId}" type="button" aria-label="Immagine successiva">&#10095;</button>
+    <div class="carousel-images">
+        <div class="carousel-placeholder" style="aspect-ratio: 16/9; height: auto;">
+            Caricamento immagini...
+        </div>
+    </div>
+    <button id="${prevBtnId}" type="button" aria-label="Immagine precedente" style="display: none;">&#10094;</button>
+    <button id="${nextBtnId}" type="button" aria-label="Immagine successiva" style="display: none;">&#10095;</button>
     `;
 
     let availableImages = [];
+    let imageDimensions = new Map(); // Cache per le dimensioni delle immagini
     let current = 0;
     let isAnimating = false;
     let allImagesLoaded = false;
@@ -33,22 +103,78 @@ async function createProjectCarousel(projectName, container) {
 
     // Fetch all images from the project folder using fetch and directory listing (requires server-side support)
     async function fetchImages() {
-    // Assumes a PHP/Apache directory listing is enabled
-    // Example: GET res/projectName/ returns HTML with <a href="img1.png"> etc.
-    try {
-        const response = await fetch(`res/${projectName}/`);
-        const text = await response.text();
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(text, 'text/html');
-        const links = Array.from(doc.querySelectorAll('a'));
-        availableImages = links
-        .map(a => a.getAttribute('href'))
-        .filter(href => /\.(png|jpg|jpeg|svg|webp|gif)$/i.test(href))
-        .map(href => `res/${projectName}/${href}`);
-    } catch (e) {
-        availableImages = [];
+        // Assumes a PHP/Apache directory listing is enabled
+        try {
+            const response = await fetch(`res/${projectName}/`);
+            const text = await response.text();
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(text, 'text/html');
+            const links = Array.from(doc.querySelectorAll('a'));
+            availableImages = links
+                .map(a => a.getAttribute('href'))
+                .filter(href => /\.(png|jpg|jpeg|svg|webp|gif)$/i.test(href))
+                .map(href => `res/${projectName}/${href}`);
+        } catch (e) {
+            availableImages = [];
+        }
+        
+        if (availableImages.length > 0) {
+            // Prima carica le dimensioni della prima immagine per il placeholder
+            await loadImageDimensions(availableImages[0]);
+            updatePlaceholderSize();
+            // Poi inizializza il carousel
+            initializeCarousel();
+            // In background, carica le dimensioni delle altre immagini
+            loadRemainingImageDimensions();
+        } else {
+            initializeCarousel();
+        }
     }
-    initializeCarousel();
+
+    // Funzione per caricare solo le dimensioni di un'immagine (senza scaricare tutto il contenuto)
+    async function loadImageDimensions(src) {
+        return new Promise((resolve) => {
+            const img = new Image();
+            img.onload = function() {
+                imageDimensions.set(src, {
+                    width: this.naturalWidth,
+                    height: this.naturalHeight,
+                    aspectRatio: this.naturalWidth / this.naturalHeight
+                });
+                resolve();
+            };
+            img.onerror = () => {
+                // Fallback con aspect ratio standard se l'immagine non si carica
+                imageDimensions.set(src, {
+                    width: 1920,
+                    height: 1080,
+                    aspectRatio: 16/9
+                });
+                resolve();
+            };
+            img.src = src;
+        });
+    }
+
+    // Aggiorna il placeholder con le dimensioni corrette
+    function updatePlaceholderSize() {
+        const placeholder = container.querySelector('.carousel-placeholder');
+        if (placeholder && availableImages.length > 0) {
+            const firstImageDimensions = imageDimensions.get(availableImages[0]);
+            if (firstImageDimensions) {
+                placeholder.style.aspectRatio = firstImageDimensions.aspectRatio;
+                placeholder.textContent = `Caricamento ${availableImages.length} immagine${availableImages.length !== 1 ? 'i' : ''}...`;
+            }
+        }
+    }
+
+    // Carica le dimensioni delle immagini rimanenti in background
+    async function loadRemainingImageDimensions() {
+        // Salta la prima immagine già caricata
+        const remainingImages = availableImages.slice(1);
+        for (const src of remainingImages) {
+            await loadImageDimensions(src);
+        }
     }
 
     function createImg(src, index) {
@@ -56,9 +182,26 @@ async function createProjectCarousel(projectName, container) {
         img.src = src;
         img.className = 'carousel-img';
         img.alt = '';
-        img.loading = 'lazy';
+        img.loading = index === 0 ? 'eager' : 'lazy'; // Prima immagine eager, altre lazy
         img.dataset.index = index;
         img.style.opacity = '0';
+        
+        // Applica le dimensioni precaricate se disponibili
+        const dimensions = imageDimensions.get(src);
+        if (dimensions) {
+            img.style.aspectRatio = dimensions.aspectRatio;
+            img.width = dimensions.width;
+            img.height = dimensions.height;
+        }
+        
+        // Aggiungi event listener per lo zoom
+        img.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (!isZoomActive && !isAnimating) {
+                openImageZoom(src);
+            }
+        });
+        
         return img;
     }
 
@@ -67,6 +210,12 @@ async function createProjectCarousel(projectName, container) {
         const prevBtn = container.querySelector(`#${prevBtnId}`);
         const nextBtn = container.querySelector(`#${nextBtnId}`);
         const len = availableImages.length;
+
+        // Rimuovi il placeholder
+        const placeholder = carousel.querySelector('.carousel-placeholder');
+        if (placeholder) {
+            placeholder.remove();
+        }
 
         if (len === 0) {
             carousel.innerHTML = '<span>Nessuna immagine disponibile riprova più tardi</span>';
@@ -95,7 +244,6 @@ async function createProjectCarousel(projectName, container) {
             prevBtn.style.display = 'block';
             nextBtn.style.display = 'block';
         }
-        carousel.innerHTML = '';
 
         // Carica tutte le immagini e le mantiene nascoste
         availableImages.forEach((src, index) => {
