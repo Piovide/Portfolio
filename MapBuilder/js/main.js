@@ -26,11 +26,11 @@ function showMobileWarning() {
                 border-radius: 15px;
                 backdrop-filter: blur(10px);
                 border: 1px solid rgba(255, 255, 255, 0.2);
-                max-width: 90%;
+                max-width: 400px;
             ">
                 <h2 style="margin-bottom: 20px; font-size: 24px;">⚠️ Dispositivo Non Supportato</h2>
                 <p style="margin-bottom: 15px; line-height: 1.6;">
-                    Questa applicazione è ottimizzata solo per computer desktop a causa delle sue elevate richieste di prestazioni e periferiche specifiche.
+                    Questa applicazione è ottimizzata solo per computer desktop a causa delle sue elevate richieste di prestazioni.
                 </p>
                 <p style="margin-bottom: 20px; line-height: 1.6;">
                     Per una migliore esperienza, ti consigliamo di visitare questa sezione da un computer.
@@ -102,8 +102,8 @@ async function cheeerpjStartUp() {
         if (!logProcessing) processLogQueue();
         
         // Controlla se il gioco è completamente avviato
-        if (message.includes('Game loop started successfully!') || 
-            message.includes('Game panel created successfully!')) {
+        if (message.includes('MapBuilder inizializzato correttamente') || 
+            message.includes('MapBuilder avviato con successo!')) {
             
             setTimeout(() => {
                 const style = document.createElement('style');
@@ -171,7 +171,7 @@ async function cheeerpjStartUp() {
         originalConsoleLog.apply(console, args);
     };
 
-    await cheerpjRunJar('../app/Platformer.jar', {
+    await cheerpjRunJar('../app/MapBuilder.jar', {
         stdout: handleLogMessage,
         stderr: handleLogMessage
     });

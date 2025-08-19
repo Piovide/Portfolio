@@ -85,14 +85,6 @@ body, html {
     z-index: -999;
 }
 
-.cjWindow{
-    background: none !important;
-}
-
-canvas.cjSwapped{
-    border-radius: 24px;
-}
-
 #log-container p.fade-out {
     opacity: 0;
 }

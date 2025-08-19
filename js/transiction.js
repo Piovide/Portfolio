@@ -5,6 +5,7 @@ function handleClick(e){
     bars.forEach((bar, index) => {
         bar.style.animationPlayState = "running";
         body.style.overflow = "hidden";
+        body.style.marginRight = "12px";
     });
     const lastBar = bars[bars.length - 1];
     lastBar.addEventListener("animationend", () => {
