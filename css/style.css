@@ -167,7 +167,7 @@ body {
 /* Background ottimizzato per dispositivi mobili */
 @media (max-width: 767px) {
     body {
-        background: url('../res/mobile_background.jpeg') no-repeat center / cover;
+        background: url('../res/mobile_background.jpeg') no-repeat top left / cover;
     }
 }
 
@@ -388,6 +388,7 @@ main #projects-title {
     color: var(--text-white);
     text-align: center;
     margin: var(--spacing-lg) 0;
+    margin-bottom: -1rem;
 }
 
 .project-section {
@@ -811,22 +812,31 @@ RESPONSIVE DESIGN
 
 @media (max-width: 600px) {
     :root {
-        --font-title-hero: 2.5rem;
-        --font-title-large: 1.5rem;
-        --font-title-medium: 1.5rem;
-        --font-title-small: 1.2rem;
-        --font-text-large: 1rem;
-        --font-text-medium: 1rem;
-        --font-text-small: 1rem;
+        --font-title-hero: 2rem;
+        --font-title-large: 1.2rem;
+        --font-title-medium: 1.1rem;
+        --font-title-small: 1rem;
+        --font-text-large: 0.95rem;
+        --font-text-medium: 0.9rem;
+        --font-text-small: 0.85rem;
     }
     
     #title-portfolio {
+        font-size: 9ch;
         margin-top: var(--spacing-xs);
     }
     
     section.intro-section {
         width: 100%;
         padding: var(--spacing-xs);
+        flex-wrap: wrap;
+    }
+
+    section.intro-section img.intro-image {
+        width: 100%;
+        max-width: 200px;
+        object-fit: cover;
+        margin: 10px auto 0 auto;
     }
     
     section.curriculum-section {
@@ -846,106 +856,54 @@ RESPONSIVE DESIGN
         padding: var(--spacing-xs);
         margin: 0.2rem;
     }
+
+    .curriculum-block h2 {
+        font-size: var(--font-title-large);
+    }
+
+    .curriculum-block ul {
+        font-size: var(--font-text-small);
+    }
     
     main #projects-title {
-        margin: var(--spacing-sm) 0;
+        margin: var(--spacing-xs) 0;
+        font-size: var(--font-title-hero);
+        margin-bottom: -4rem;
     }
     
     .project-section {
-        width: 100%;
+        width: 95%;
         padding: var(--spacing-sm) 0;
     }
     
     .carousel-center,
     .carousel-left,
     .carousel-right {
-        width: 100vw;
-        max-width: 100vw;
+        width: 75vw;
     }
+
+    .project-carousel [id^="carousel-prev"], .project-carousel [id^="carousel-next"] {
+        font-size: 3rem;
+        width: 8%;
+    } 
     
     .project-info {
         padding: 0 var(--spacing-xs);
     }
+
+    .project-title a, .project-title {
+        font-size: var(--font-title-hero)
+    }
+
+    .more-project-info li{
+        margin-top: 0;
+    }
+
+    .more-project-info a{
+        word-break: auto-phrase;
+    }
     
     .skill-bar {
         height: 12px;
-    }
-}
-
-/* Custom Scrollbar Styles */
-/* .custom-scrollbar {
-    position: fixed;
-    top: 0;
-    right: 0;
-    width: 14px;
-    height: 100vh;
-    z-index: 9999;
-    pointer-events: auto;
-    padding-right: 2px;
-    box-sizing: border-box;
-}
-
-.custom-scrollbar .position {
-    position: relative;
-    width: 12px;
-    height: 100%;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 6px;
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    margin-left: auto;
-}
-
-.custom-scrollbar .knob {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100px;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.4));
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background 0.15s ease, box-shadow 0.15s ease;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-    touch-action: none;
-    user-select: none;
-    will-change: transform;
-}
-
-.custom-scrollbar .knob:hover {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.6));
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-}
-
-.custom-scrollbar .knob:active {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.7));
-    transform: translateY(var(--knob-pos, 0px)) scale(1.1);
-} */
-
-/* Hide default scrollbar */
-
-/* Mobile optimizations */
-@media (max-width: 768px) {
-    .custom-scrollbar {
-        width: 16px;
-        right: 0;
-        padding-right: 3px;
-    }
-    
-    .custom-scrollbar .position {
-        width: 13px;
-    }
-    
-    .custom-scrollbar .knob {
-        min-height: 60px;
-    }
-}
-
-/* Touch device optimizations */
-@media (hover: none) and (pointer: coarse) {
-    .custom-scrollbar .knob {
-        background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.6));
-        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.25);
     }
 }
