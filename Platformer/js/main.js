@@ -82,6 +82,49 @@ const observer = new MutationObserver(() => {
 });
 observer.observe(document.body, { childList: true, subtree: true });
 
+// Funzione per scaricare il JAR file da GitHub Releases
+async function downloadJarFile(jarName, progressCallback) {
+    const url = `https://github.com/Piovide/Portfolio/releases/latest/download/${jarName}`;
+    
+    try {
+        progressCallback?.('Downloading JAR file...');
+        const response = await fetch(url);
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const total = parseInt(response.headers.get('content-length'), 10);
+        let loaded = 0;
+        
+        const reader = response.body.getReader();
+        const chunks = [];
+        
+        while (true) {
+            const { done, value } = await reader.read();
+            
+            if (done) break;
+            
+            chunks.push(value);
+            loaded += value.length;
+            
+            if (total && progressCallback) {
+                const percentage = Math.round((loaded / total) * 100);
+                progressCallback(`Downloading: ${percentage}% (${Math.round(loaded/1024/1024)}MB / ${Math.round(total/1024/1024)}MB)`);
+            }
+        }
+        
+        const blob = new Blob(chunks);
+        const arrayBuffer = await blob.arrayBuffer();
+        
+        progressCallback?.('Download completed! Starting application...');
+        return arrayBuffer;
+    } catch (error) {
+        console.error('Error downloading JAR:', error);
+        throw error;
+    }
+}
+
 async function cheeerpjStartUp() {
     await cheerpjInit({ version: '17' });
     const container = document.querySelector('.platform-container');
