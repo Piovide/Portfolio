@@ -4,8 +4,6 @@ function handleClick(e){
     const body = document.getElementsByTagName("body")[0];
     bars.forEach((bar, index) => {
         bar.style.animationPlayState = "running";
-        body.style.overflow = "hidden";
-        body.style.marginRight = "12px";
     });
     const lastBar = bars[bars.length - 1];
     lastBar.addEventListener("animationend", () => {
@@ -17,7 +15,6 @@ function handleClick(e){
                     bar.offsetHeight;
                     bar.style.animation = "";
                 });
-                body.style.overflow = "auto";
-            }, 100);
+            }, 500);
     });
 }
