@@ -83,7 +83,13 @@ const observer = new MutationObserver(() => {
 observer.observe(document.body, { childList: true, subtree: true });
 
 async function cheeerpjStartUp() {
-    await cheerpjInit({ version: '17' });
+    await cheerpjInit({ 
+        version: '17',
+        preloadProgress: (current, total) => {
+            console.log(`Preloading: ${current}/${total}`);
+        },
+        enableInputMethods: true
+    });
     const container = document.querySelector('.platform-container');
 
     // Crea il display con un ID specifico all'interno del container
@@ -171,10 +177,15 @@ async function cheeerpjStartUp() {
         originalConsoleLog.apply(console, args);
     };
 
-    await cheerpjRunJar('Platformer.jar', {
-        stdout: handleLogMessage,
-        stderr: handleLogMessage
-    });
+    try {
+        await cheerpjRunJar('/app/Platformer.jar', {
+            stdout: handleLogMessage,
+            stderr: handleLogMessage
+        });
+    } catch (error) {
+        console.error('Errore nel caricamento del JAR:', error);
+        handleLogMessage('❌ Errore nel caricamento del JAR: ' + error.message);
+    }
 }
 
 // Avvia automaticamente quando la pagina si carica
