@@ -1,12 +1,138 @@
-// Funzione per detectare dispositivi mobili
+// Funzione per bloccare l'orientamento e gestire i cambiamenti
+function lockOrientation() {
+    // Prova a bloccare l'orientamento in landscape
+    if (screen.orientation && screen.orientation.lock) {
+        screen.orientation.lock('landscape').catch(() => {
+            // Se non riesce, usa altri metodi
+            console.log('Orientamento non bloccabile, usando metodi alternativi');
+        });
+    }
+    
+    // Blocca lo zoom e il pinch
+    document.addEventListener('touchstart', function(event) {
+        if (event.touches.length > 1) {
+            event.preventDefault();
+        }
+    }, { passive: false });
+    
+    document.addEventListener('touchmove', function(event) {
+        if (event.touches.length > 1) {
+            event.preventDefault();
+        }
+    }, { passive: false });
+    
+    // Previene il double-tap zoom
+    let lastTouchEnd = 0;
+    document.addEventListener('touchend', function(event) {
+        const now = (new Date()).getTime();
+        if (now - lastTouchEnd <= 300) {
+            event.preventDefault();
+        }
+        lastTouchEnd = now;
+    }, false);
+}
+
+// Funzione per gestire i resize e orientamento
+function handleResizeAndOrientation() {
+    // Forza il refresh del layout delle applicazioni Java
+    const cheerpjDisplay = document.getElementById('cheerpjDisplay');
+    if (cheerpjDisplay) {
+        // Forza il ricalcolo delle dimensioni
+        cheerpjDisplay.style.width = '100%';
+        cheerpjDisplay.style.height = '100%';
+        
+        // Trigger resize event per CheerpJ
+        setTimeout(() => {
+            window.dispatchEvent(new Event('resize'));
+        }, 100);
+    }
+}
+
+// Funzione avanzata per detectare dispositivi mobili
 function isMobileDevice() {
-    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ||
-           window.innerWidth <= 768;
+    // Controllo User Agent (può essere aggirato ma è un primo filtro)
+    const userAgentMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    
+    // Controllo touch screen (più affidabile)
+    const hasTouchScreen = 'ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0;
+    
+    // Controllo dimensioni schermo fisiche
+    const screenTooSmall = window.screen.width <= 768 || window.screen.height <= 768;
+    
+    // Controllo orientamento (i desktop raramente hanno orientamento)
+    const hasOrientationAPI = 'orientation' in screen || 'orientation' in window;
+    
+    // Controllo memoria limitata (dispositivi mobili hanno meno RAM)
+    const hasLimitedMemory = navigator.deviceMemory && navigator.deviceMemory < 4;
+    
+    // Controllo connessione (dispositivi mobili spesso hanno connessioni più lente)
+    const hasSlowConnection = navigator.connection && 
+        (navigator.connection.effectiveType === 'slow-2g' || 
+         navigator.connection.effectiveType === '2g' || 
+         navigator.connection.effectiveType === '3g');
+    
+    // Controllo se è un tablet o telefono based su dimensioni e rapporto
+    const aspectRatio = window.screen.width / window.screen.height;
+    const isTabletSize = (aspectRatio > 0.6 && aspectRatio < 1.5) && screenTooSmall;
+    
+    // Se più di 2 condizioni sono vere, probabilmente è mobile
+    const mobileIndicators = [
+        userAgentMobile,
+        hasTouchScreen,
+        screenTooSmall,
+        hasOrientationAPI,
+        hasLimitedMemory,
+        hasSlowConnection,
+        isTabletSize
+    ].filter(Boolean).length;
+    
+    return mobileIndicators >= 2;
+}
+
+// Funzione per monitorare cambiamenti di orientamento e ridimensionamento
+function setupMobileMonitoring() {
+    let warningShown = false;
+    
+    function checkAndShowWarning() {
+        if (isMobileDevice() && !warningShown) {
+            showMobileWarning();
+            warningShown = true;
+        }
+    }
+    
+    // Controlla immediatamente
+    checkAndShowWarning();
+    
+    // Monitora i cambiamenti di orientamento
+    window.addEventListener('orientationchange', () => {
+        setTimeout(() => {
+            checkAndShowWarning();
+            handleResizeAndOrientation();
+        }, 500); // Delay per permettere al browser di aggiornarsi
+    });
+    
+    // Monitora il ridimensionamento della finestra
+    window.addEventListener('resize', () => {
+        setTimeout(() => {
+            checkAndShowWarning();
+            handleResizeAndOrientation();
+        }, 100);
+    });
+    
+    // Controllo periodico ogni 2 secondi
+    setInterval(checkAndShowWarning, 2000);
 }
 
 // Funzione per mostrare messaggio di avviso per dispositivi mobili
 function showMobileWarning() {
     const container = document.querySelector('.platform-container');
+    
+    // Nascondi il disclaimer quando mostri l'avviso mobile
+    const disclaimer = document.querySelector('.disclaimer');
+    if (disclaimer) {
+        disclaimer.style.display = 'none';
+    }
+    
     container.innerHTML = `
         <div style="
             display: flex;
@@ -30,10 +156,10 @@ function showMobileWarning() {
             ">
                 <h2 style="margin-bottom: 20px; font-size: 24px;">⚠️ Dispositivo Non Supportato</h2>
                 <p style="margin-bottom: 15px; line-height: 1.6;">
-                    Questa applicazione è ottimizzata solo per computer desktop a causa delle sue elevate richieste di prestazioni e periferiche specifiche.
+                    Questa applicazione è ottimizzata esclusivamente per computer desktop con mouse e tastiera a causa delle sue elevate richieste di prestazioni.
                 </p>
-                <p style="margin-bottom: 20px; line-height: 1.6;">
-                    Per una migliore esperienza, ti consigliamo di visitare questa sezione da un computer.
+                <p style="margin-bottom: 20px; line-height: 1.6; font-size: 14px; opacity: 0.8;">
+                    Nota: Il cambio di orientamento o la modalità desktop del browser non risolveranno i problemi di compatibilità.
                 </p>
                 <button onclick="window.history.back()" style="
                     background: #ff6b6b;
@@ -190,12 +316,15 @@ async function cheeerpjStartUp() {
 
 // Avvia automaticamente quando la pagina si carica
 window.addEventListener('load', () => {
-    // Controlla se è un dispositivo mobile
-    if (isMobileDevice()) {
-        showMobileWarning();
-        return; // Non continua con il caricamento dell'applicazione Java
-    }
+    // Inizializza il blocco orientamento
+    lockOrientation();
     
-    enterFullscreen();
-    cheeerpjStartUp();
+    // Usa il nuovo sistema di monitoraggio dispositivi mobili
+    setupMobileMonitoring();
+    
+    // Se non è rilevato come mobile, procedi con l'applicazione
+    if (!isMobileDevice()) {
+        enterFullscreen();
+        cheeerpjStartUp();
+    }
 });

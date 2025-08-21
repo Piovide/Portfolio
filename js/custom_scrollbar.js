@@ -64,6 +64,11 @@ function customScrollBar(element) {
 }
 
 function updateBackgroundPosition(progress) {
+  // Disabilita l'animazione del background su dispositivi mobili
+  if (window.innerWidth <= 767) {
+    return;
+  }
+  
   // Calcola la nuova posizione del background per coprire tutto il range
   // Da "top" (0%) quando progress = 0 a "bottom" (100%) quando progress = 1
   var backgroundPosition = "center " + (progress * 100) + "%";

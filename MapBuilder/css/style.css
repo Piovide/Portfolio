@@ -9,7 +9,13 @@ body, html {
     width: 100%;
     height: 100%;
     overflow: hidden;
-    background: url('../../res/background.png') no-repeat top left / cover;
+    background: url('../../res/mobile_background.jpeg') no-repeat center center / cover;
+    /* Blocca il ridimensionamento e lo zoom */
+    touch-action: none;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
 }
 
 .platform-container {
@@ -17,6 +23,11 @@ body, html {
     width: 100vw;
     height: 100vh;
     overflow: hidden;
+    /* Impedisce il ridimensionamento */
+    min-width: 100vw;
+    min-height: 100vh;
+    max-width: 100vw;
+    max-height: 100vh;
 }
 
 #cheerpjDisplay {
@@ -24,10 +35,45 @@ body, html {
     height: 100% !important;
     border: 0;
     display: block;
+    /* Impedisce il ridimensionamento dell'applicazione Java */
+    position: absolute;
+    top: 0;
+    left: 0;
+    object-fit: contain;
+    object-position: center;
 }
 
 #cheerpjDisplay svg {
     overflow: hidden;
+    /* Mantiene le proporzioni originali */
+    width: 100% !important;
+    height: 100% !important;
+}
+
+/* Responsive adjustments per evitare problemi di orientamento */
+@media screen and (max-height: 600px) and (orientation: landscape) {
+    #log-container {
+        width: 25%;
+        font-size: 12px;
+    }
+    
+    .disclaimer {
+        font-size: 14px;
+        max-width: 400px;
+        padding: 8px 12px;
+    }
+}
+
+@media screen and (max-width: 900px) {
+    #log-container {
+        width: 35%;
+        font-size: 13px;
+    }
+    
+    .disclaimer {
+        font-size: 16px;
+        max-width: 500px;
+    }
 }
 #log-container {
     width: 30%;
