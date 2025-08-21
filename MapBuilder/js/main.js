@@ -171,7 +171,7 @@ async function cheeerpjStartUp() {
         originalConsoleLog.apply(console, args);
     };
 
-    await cheerpjRunJar('./MapBuilder.jar', {
+    await cheerpjRunJar('/app/Portfolio/MapBuilder/MapBuilder.jar', {
         stdout: handleLogMessage,
         stderr: handleLogMessage
     });

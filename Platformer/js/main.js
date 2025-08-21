@@ -178,7 +178,7 @@ async function cheeerpjStartUp() {
     };
 
     try {
-        await cheerpjRunJar('/app/Platformer.jar', {
+        await cheerpjRunJar('/app/Portfolio/Platformer/Platformer.jar', {
             stdout: handleLogMessage,
             stderr: handleLogMessage
         });
