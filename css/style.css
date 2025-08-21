@@ -170,7 +170,62 @@ body {
 /* Background ottimizzato per dispositivi mobili */
 @media (max-width: 767px) {
     body {
-        background: url('../res/mobile_background.jpeg') no-repeat top left / cover;
+        background: url('../res/mobile_background.jpeg') no-repeat center center / cover;
+        background-attachment: fixed;
+        overflow: auto;
+        min-height: 100vh;
+    }
+    
+    /* Ripristina la scrollbar nativa su mobile */
+    body::-webkit-scrollbar {
+        display: block;
+        width: 8px;
+    }
+    
+    body::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 4px;
+    }
+    
+    body::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.3);
+        border-radius: 4px;
+    }
+    
+    body::-webkit-scrollbar-thumb:hover {
+        background: rgba(255, 255, 255, 0.5);
+    }
+    
+    body {
+        scrollbar-width: thin;
+        scrollbar-color: rgba(255, 255, 255, 0.3) rgba(255, 255, 255, 0.1);
+        -ms-overflow-style: scrollbar;
+    }
+    
+    /* Nascondi il custom scrollbar su mobile */
+    .scrollable {
+        overflow: visible;
+    }
+    
+    .position {
+        display: none;
+    }
+    
+    .content {
+        position: static;
+        overflow: visible;
+        padding-right: 0;
+    }
+    
+    /* Ripristina la scrollbar nativa del content su mobile */
+    .content::-webkit-scrollbar {
+        display: block;
+        width: 8px;
+    }
+    
+    .content {
+        scrollbar-width: thin;
+        -ms-overflow-style: scrollbar;
     }
 }
 
@@ -935,7 +990,6 @@ RESPONSIVE DESIGN
     
     section.intro-section img.intro-image {
         margin: 0 0 var(--spacing-sm) 0;
-        width: 100%;
         max-width: 200px;
         object-fit: cover;
     }
@@ -994,13 +1048,11 @@ RESPONSIVE DESIGN
     }
     
     section.intro-section {
-        width: 100%;
         padding: var(--spacing-xs);
         flex-wrap: wrap;
     }
 
     section.intro-section img.intro-image {
-        width: 100%;
         max-width: 200px;
         object-fit: cover;
         margin: 10px auto 0 auto;

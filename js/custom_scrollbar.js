@@ -21,9 +21,6 @@ function customScrollBar(element) {
   var scrollbarSize = detectScrollbarSize();
   
   if (scrollbarSize == 0) {
-    // Probably Mac with Apple peripherals
-    content.style.right = "-30px";
-    content.style.paddingRight = "30px";
   }else{
     content.style.right = -scrollbarSize + "px";
   }
