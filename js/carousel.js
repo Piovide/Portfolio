@@ -101,22 +101,20 @@ async function createProjectCarousel(projectName, container) {
     let allImagesLoaded = false;
     let lastDirection = 'prev'; // Traccia la direzione dell'ultima navigazione
 
-    // Fetch all images from the project folder using fetch and directory listing (requires server-side support)
+    // Fetch all images from the project folder using predefined image lists
     async function fetchImages() {
-        // Assumes a PHP/Apache directory listing is enabled
-        try {
-            const response = await fetch(`res/${projectName}/`);
-            const text = await response.text();
-            const parser = new DOMParser();
-            const doc = parser.parseFromString(text, 'text/html');
-            const links = Array.from(doc.querySelectorAll('a'));
-            availableImages = links
-                .map(a => a.getAttribute('href'))
-                .filter(href => /\.(png|jpg|jpeg|svg|webp|gif)$/i.test(href))
-                .map(href => `res/${projectName}/${href}`);
-        } catch (e) {
-            availableImages = [];
-        }
+        // Define known images for each project (GitHub Pages compatible)
+        const projectImages = {
+            'project_1': ['img1.svg', 'img2.svg', 'img3.svg', 'img4.svg'],
+            'project_2': ['img1.svg'],
+            'project_3': ['img1.svg', 'img2.svg'],
+            'project_4': ['img1.svg', 'img2.svg', 'img3.svg'],
+            'project_5': ['img1.svg', 'img2.svg', 'img3.svg'],
+            'project_6': ['img1.svg', 'img2.svg']
+        };
+        
+        const images = projectImages[projectName] || [];
+        availableImages = images.map(img => `res/${projectName}/${img}`);
         
         if (availableImages.length > 0) {
             // Prima carica le dimensioni della prima immagine per il placeholder
