@@ -192,11 +192,15 @@ async function createProjectCarousel(projectName, container) {
             img.height = dimensions.height;
         }
         
-        // Aggiungi event listener per lo zoom
+        // Aggiungi event listener per lo zoom con throttling
         img.addEventListener('click', (e) => {
             e.stopPropagation();
             if (!isZoomActive && !isAnimating) {
-                openImageZoom(src);
+                // Throttling per prevenire click multipli rapidi
+                if (!img.lastClickTime || Date.now() - img.lastClickTime > 300) {
+                    img.lastClickTime = Date.now();
+                    openImageZoom(src);
+                }
             }
         });
         

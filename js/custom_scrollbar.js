@@ -64,19 +64,29 @@ function customScrollBar(element) {
 }
 
 function updateBackgroundPosition(progress) {
-  // Disabilita l'animazione del background su dispositivi mobili
+  // Disabilita l'animazione del background su dispositivi mobili o con performance limitate
   if (window.innerWidth <= 767) {
     return;
   }
   
-  // Calcola la nuova posizione del background per coprire tutto il range
-  // Da "top" (0%) quando progress = 0 a "bottom" (100%) quando progress = 1
-  var backgroundPosition = "center " + (progress * 100) + "%";
+  // Verifica se l'utente preferisce animazioni ridotte
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    return;
+  }
   
-  // Applica la posizione con un piccolo ritardo per sincronizzare con la transizione CSS
-  requestAnimationFrame(function() {
-    document.body.style.backgroundPosition = backgroundPosition;
-  });
+  // Usa throttling per ridurre la frequenza degli aggiornamenti
+  if (!updateBackgroundPosition.lastCall || Date.now() - updateBackgroundPosition.lastCall > 16) {
+    updateBackgroundPosition.lastCall = Date.now();
+    
+    // Calcola la nuova posizione del background per coprire tutto il range
+    // Da "top" (0%) quando progress = 0 a "bottom" (100%) quando progress = 1
+    var backgroundPosition = "center " + (progress * 100) + "%";
+    
+    // Applica la posizione con throttling
+    requestAnimationFrame(function() {
+      document.body.style.backgroundPosition = backgroundPosition;
+    });
+  }
 }
 
 customScrollBar(document.querySelector(".scrollable"));

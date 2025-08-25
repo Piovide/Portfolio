@@ -1,21 +1,30 @@
 document.addEventListener('DOMContentLoaded', function() {
+    // Verifica se l'utente preferisce animazioni ridotte
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    
     // Funzione per animare le skill bar
     function animateSkillBars() {
         const skillLevels = document.querySelectorAll('.skill-level');
         let lastScrollY = window.scrollY;
         let scrollDirection = 'down';
+        let scrollUpdateTimeout;
 
-        // Monitora la direzione dello scroll
+        // Monitora la direzione dello scroll con throttling
         function updateScrollDirection() {
-            const currentScrollY = window.scrollY;
-            scrollDirection = currentScrollY > lastScrollY ? 'down' : 'up';
-            lastScrollY = currentScrollY;
+            if (scrollUpdateTimeout) return;
+            
+            scrollUpdateTimeout = setTimeout(() => {
+                const currentScrollY = window.scrollY;
+                scrollDirection = currentScrollY > lastScrollY ? 'down' : 'up';
+                lastScrollY = currentScrollY;
+                scrollUpdateTimeout = null;
+            }, 100);
         }
 
-        // Aggiungi listener per il scroll
+        // Aggiungi listener per il scroll con passive per performance
         window.addEventListener('scroll', updateScrollDirection, { passive: true });
 
-        // Crea un Intersection Observer
+        // Crea un Intersection Observer con configurazione ottimizzata
         const observer = new IntersectionObserver(function(entries) {
             entries.forEach(function(entry) {
                 if (entry.isIntersecting) {
@@ -30,12 +39,15 @@ document.addEventListener('DOMContentLoaded', function() {
                     orderedSkillLevels.forEach(function(skillLevel, index) {
                         const percentage = skillLevel.getAttribute('data-percentage');
                         
+                        // Riduce il delay per animazioni ridotte
+                        const delay = prefersReducedMotion ? 0 : index * 100;
+                        
                         setTimeout(function() {
                             // Imposta la variabile CSS per la larghezza target
                             skillLevel.style.setProperty('--target-width', percentage + '%');
                             // Aggiungi la classe per attivare l'animazione
                             skillLevel.classList.add('animate');
-                        }, index * 100); // 100ms di ritardo tra una barra e l'altra
+                        }, delay);
                     });
                 } else {
                     // Quando esce dalla vista - resetta le skill bar

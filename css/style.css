@@ -69,8 +69,32 @@ CSS CUSTOM PROPERTIES
 }
 
 /* ===========================
-RESET & BASE STYLES
+PERFORMANCE OPTIMIZATIONS
 =========================== */
+
+/* Disabilita animazioni e effetti costosi per dispositivi con performance ridotta */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+    
+    .skill-level {
+        transition: none !important;
+    }
+    
+    .carousel-img {
+        transition: none !important;
+    }
+    
+    .knob {
+        transition: none !important;
+    }
+}
 * {
     box-sizing: border-box;
     margin: 0;
@@ -91,11 +115,11 @@ RESET & BASE STYLES
   right: 4px;
   width: 10px;
   bottom: 4px;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.2);
   border-radius: 10px;
   transform: translateZ(0);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  /* Rimuovi backdrop-filter su dispositivi con problemi di performance */
+  border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 .knob {
@@ -141,14 +165,14 @@ RESET & BASE STYLES
 
 body {
     font-family: var(--font-primary);
-    background: url('../res/background.png') no-repeat top left / cover;
+    background: url('../res/background.jpg') no-repeat top left / cover;
     color: var(--text-primary);
     line-height: 1.6;
     letter-spacing: 0.1em;
     margin: 0;
     padding: 0;
     overflow: hidden; /* Nasconde la scrollbar del body */
-    transition: background-position 0.05s ease;
+    /* Rimuovi l'animazione costosa del background position per dispositivi senza HW acceleration */
 }
 
 /* Container principale */
@@ -268,12 +292,13 @@ section.intro-section {
     background: var(--bg-glass-light);
     border-radius: var(--border-radius-large);
     box-shadow: var(--shadow-soft);
-    backdrop-filter: var(--backdrop-blur-medium);
-    -webkit-backdrop-filter: var(--backdrop-blur-medium);
+    background: rgba(255, 255, 255, 0.15);
     border: 1px solid var(--bg-glass-border);
     margin: var(--spacing-lg) auto;
     padding: var(--spacing-lg);
     display: flex;
+        justify-content: center;
+    align-items: center;
 }
 
 section.intro-section img.intro-image {
@@ -283,8 +308,10 @@ section.intro-section img.intro-image {
     box-shadow: var(--shadow-soft);
     object-fit: contain;
     box-sizing: content-box;
-    height: fit-content;
-    width: fit-content;
+    height: 300px;
+    width: 300px;
+    max-width: fit-content;
+    max-height: fit-content;
 }
 
 .intro-text {
@@ -312,11 +339,10 @@ section.curriculum-section {
     width: 90%;
     margin: var(--spacing-lg) auto;
     padding: var(--spacing-lg);
-    background: var(--bg-glass-medium);
+    background: rgba(255, 255, 255, 0.12);
     border-radius: var(--border-radius-large);
     box-shadow: var(--shadow-medium);
-    backdrop-filter: var(--backdrop-blur-light);
-    -webkit-backdrop-filter: var(--backdrop-blur-light);
+    /* Rimuovi backdrop-filter per performance */
     border: 1px solid var(--bg-glass-border-light);
     display: grid;
     gap: var(--spacing-lg);
@@ -458,11 +484,10 @@ main #projects-title {
     width: 90%;
     margin: var(--spacing-xl) auto;
     padding: var(--spacing-lg) 0;
-    background: var(--bg-glass-medium);
+    background: rgba(255, 255, 255, 0.12);
     border-radius: var(--border-radius-large);
     box-shadow: var(--shadow-medium);
-    backdrop-filter: var(--backdrop-blur-light);
-    -webkit-backdrop-filter: var(--backdrop-blur-light);
+    /* Rimuovi backdrop-filter per performance */
     border: 1px solid var(--bg-glass-border-light);
 }
 
@@ -1140,7 +1165,8 @@ RESPONSIVE DESIGN
     
     footer{
         padding: var(--spacing-md) var(--spacing-sm);
-        backdrop-filter: blur(150px);
+        /* Rimuovi backdrop-filter per performance */
+        background: rgba(255, 255, 255, 0.15);
     }
 
     .footer-content {
@@ -1159,5 +1185,50 @@ RESPONSIVE DESIGN
     
     .footer-section p {
         justify-content: center;
+    }
+}
+
+/* ===========================
+PERFORMANCE OPTIMIZATIONS - PARTE 2
+=========================== */
+
+/* Ottimizzazioni per compositor e accelerazione hardware */
+.carousel-img,
+.knob,
+.skill-level,
+.transiction-bar {
+    /* Forza l'uso del compositor per elementi animati */
+    will-change: auto;
+    /* Evita repaint durante le animazioni */
+    backface-visibility: hidden;
+    /* Usa transform3d per forzare hardware acceleration quando disponibile */
+    transform: translateZ(0);
+}
+
+/* Ottimizzazioni specifiche per dispositivi con limitazioni */
+@media (max-device-pixel-ratio: 1.5) {
+    /* Disabilita ombre complesse su dispositivi a bassa densità */
+    .project-section,
+    .curriculum-section,
+    .intro-section {
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+    }
+    
+    /* Semplifica i gradienti */
+    .skill-level {
+        background: var(--primary-green) !important;
+    }
+}
+
+/* Fallback per browser senza supporto per backdrop-filter */
+@supports not (backdrop-filter: blur(5px)) {
+    .position {
+        background: rgba(255, 255, 255, 0.3) !important;
+    }
+    
+    section.intro-section,
+    .curriculum-section,
+    .project-section {
+        background: rgba(255, 255, 255, 0.2) !important;
     }
 }
