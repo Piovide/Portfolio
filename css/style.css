@@ -303,7 +303,7 @@ section.intro-section {
 
 section.intro-section img.intro-image {
     border-radius: 26px;
-    margin: auto;
+    margin: auto 0;
     margin-right: var(--spacing-lg);
     box-shadow: var(--shadow-soft);
     object-fit: contain;
@@ -543,7 +543,7 @@ PROJECT CAROUSEL
     transform: translateY(-50%);
     z-index: 2;
     font-size: 4rem;
-    width: 5%;
+    width: 8%;
     height: 100%;
     cursor: pointer;
     color: var(--text-white);
@@ -603,6 +603,7 @@ PROJECT CAROUSEL
     transform: scale(0.95);
     will-change: transform, opacity;
     backface-visibility: hidden;
+    pointer-events: none;
 }
 
 .carousel-left {
@@ -1191,19 +1192,6 @@ RESPONSIVE DESIGN
 /* ===========================
 PERFORMANCE OPTIMIZATIONS - PARTE 2
 =========================== */
-
-/* Ottimizzazioni per compositor e accelerazione hardware */
-.carousel-img,
-.knob,
-.skill-level,
-.transiction-bar {
-    /* Forza l'uso del compositor per elementi animati */
-    will-change: auto;
-    /* Evita repaint durante le animazioni */
-    backface-visibility: hidden;
-    /* Usa transform3d per forzare hardware acceleration quando disponibile */
-    transform: translateZ(0);
-}
 
 /* Ottimizzazioni specifiche per dispositivi con limitazioni */
 @media (max-device-pixel-ratio: 1.5) {
