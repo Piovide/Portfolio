@@ -400,9 +400,13 @@ section.curriculum-section {
 }
 
 .curriculum-block li {
-    margin-bottom: 0.7rem;
+    margin-bottom: 1rem;
     color: var(--text-lighter);
     line-height: 1.5;
+}
+
+.hobbies-block li {
+    margin-bottom: 1.5rem;
 }
 
 /* ===========================
